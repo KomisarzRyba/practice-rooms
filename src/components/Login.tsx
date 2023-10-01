@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { ComponentPropsWithRef, FC } from 'react';
 import { Icons } from './Icons';
@@ -10,7 +12,8 @@ import {
 	CardTitle,
 } from './ui/card';
 import { LoadingButton } from './ui/loading-button';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/tw-utils';
+import { signIn } from 'next-auth/react';
 
 const Login: FC<ComponentPropsWithRef<'div'>> = ({ className, ...props }) => {
 	return (
@@ -23,7 +26,11 @@ const Login: FC<ComponentPropsWithRef<'div'>> = ({ className, ...props }) => {
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<LoadingButton size='sm' className='w-full'>
+				<LoadingButton
+					size='sm'
+					className='w-full'
+					onClick={() => signIn('google')}
+				>
 					<Icons.google className='w-4 h-4 mr-2' />
 					Google
 				</LoadingButton>
