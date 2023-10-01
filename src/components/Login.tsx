@@ -22,7 +22,13 @@ const Login: FC<ComponentPropsWithRef<'div'>> = ({ className, ...props }) => {
 				<CardTitle>Welcome back!</CardTitle>
 				<CardDescription>
 					If this is your first time here,{' '}
-					<Link href='/register'>create an account</Link>.
+					<span
+						className='font-medium cursor-pointer hover:underline'
+						onClick={() => signIn('google')}
+					>
+						create an account
+					</span>
+					.
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

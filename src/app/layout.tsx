@@ -1,7 +1,7 @@
-import Providers from '@/components/Providers';
-import './globals.css';
-import type { Metadata } from 'next';
 import Header from '@/components/Header';
+import Providers from '@/components/Providers';
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
