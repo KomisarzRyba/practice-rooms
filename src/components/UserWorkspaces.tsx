@@ -1,7 +1,8 @@
 import { getAuthSession } from '@/lib/auth';
+import { db } from '@/lib/db';
+import { ValueNoneIcon } from '@radix-ui/react-icons';
 import { FC } from 'react';
 import WorkspaceCard from './WorkspaceCard';
-import { db } from '@/lib/db';
 
 const UserWorkspaces: FC = async () => {
 	const session = await getAuthSession();
@@ -14,6 +15,26 @@ const UserWorkspaces: FC = async () => {
 			workspacesJoined: true,
 		},
 	});
+	if (
+		user?.workspacesJoined.length === 0 &&
+		user?.workspacesCreated.length === 0
+	)
+		return (
+			<div className='w-full px-4 py-2 border rounded-lg bg-secondary'>
+				<div className='flex items-center gap-4'>
+					<ValueNoneIcon className='w-8 h-8' />
+					<div>
+						<h2 className='text-xl'>Oopsie...</h2>
+						<p className='text-sm font-normal'>
+							You are not a member of any Workspace.
+						</p>
+						<p className='text-sm font-normal'>
+							Choose an option below to join or create one!
+						</p>
+					</div>
+				</div>
+			</div>
+		);
 	return (
 		<>
 			{user!.workspacesCreated.map((w) => {
