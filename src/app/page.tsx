@@ -1,5 +1,5 @@
 import Login from '@/components/Login';
-import UserWorkspaces from '@/components/UserWorkspaces';
+import UserWorkspaces from '@/components/UserStudios';
 import { buttonVariants } from '@/components/ui/button';
 import {
 	Card,
@@ -32,29 +32,29 @@ export default async function Home() {
 						{session.user.name?.split(' ')[0] || session.user.name}.
 					</CardTitle>
 					<CardDescription className='text-lg'>
-						Find the Workspaces you are a part of below:
+						Find the Studios you are a part of below:
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<div className='grid grid-cols-1 gap-2 font-medium sm:text-lg sm:grid-cols-2'>
-						<Suspense
+						{/* <Suspense
 							fallback={
 								<ReloadIcon className='w-8 h-8 animate-spin' />
 							}
-						>
-							<UserWorkspaces />
-						</Suspense>
+						> */}
+						<UserWorkspaces />
+						{/* </Suspense> */}
 					</div>
 				</CardContent>
 				<CardFooter className='justify-end gap-2'>
-					<Link href='/workspace/join' className={buttonVariants()}>
-						Join a Workspace
+					<Link href='/studio/join' className={buttonVariants()}>
+						Join a Studio
 					</Link>
 					<Link
-						href='/workspace/create'
+						href='/studio/create'
 						className={buttonVariants({ variant: 'outline' })}
 					>
-						Create new Workspace
+						Create new Studio
 					</Link>
 				</CardFooter>
 			</Card>

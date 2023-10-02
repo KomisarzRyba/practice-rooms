@@ -1,4 +1,4 @@
-import CreateWorkspaceForm from '@/components/CreateWorkspaceForm';
+import CreateStudioForm from '@/components/CreateStudioForm';
 import {
 	Card,
 	CardContent,
@@ -20,14 +20,14 @@ const CreateWorkspacePage: FC = async () => {
 				<CardHeader>
 					<CardTitle className='flex gap-2'>
 						<DashboardIcon />
-						New Workspace
+						New Studio
 					</CardTitle>
 					<CardDescription>
 						You can edit this information later.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<CreateWorkspaceForm user={session.user} />
+					<CreateStudioForm />
 				</CardContent>
 			</Card>
 		</main>
