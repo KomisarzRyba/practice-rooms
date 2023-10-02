@@ -83,4 +83,12 @@ model Studio {
   creatorId   String
   creator     User    @relation("creator", fields: [creatorId], references: [id])
   members     User[]  @relation("member")
+  rooms       Room[]  @relation("rooms_in_studio")
+}
+
+model Room {
+  id       String @id @default(cuid())
+  name     String @unique
+  studio   Studio @relation("rooms_in_studio", fields: [studioId], references: [id])
+  studioId String
 }

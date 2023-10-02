@@ -1,6 +1,6 @@
 import * as z from "zod"
 import * as imports from "../null"
-import { CompleteUser, relatedUser } from "./index"
+import { CompleteUser, relatedUser, CompleteRoom, relatedRoom } from "./index"
 
 export const studio = z.object({
   id: z.string(),
@@ -12,6 +12,7 @@ export const studio = z.object({
 export interface CompleteStudio extends z.infer<typeof studio> {
   creator: CompleteUser
   members: CompleteUser[]
+  rooms: CompleteRoom[]
 }
 
 /**
@@ -22,4 +23,5 @@ export interface CompleteStudio extends z.infer<typeof studio> {
 export const relatedStudio: z.ZodSchema<CompleteStudio> = z.lazy(() => studio.extend({
   creator: relatedUser,
   members: relatedUser.array(),
+  rooms: relatedRoom.array(),
 }))

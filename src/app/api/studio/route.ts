@@ -45,3 +45,10 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 		return new NextResponse('Internal server error', { status: 500 });
 	}
 };
+
+export const PATCH = async (req: NextRequest, res: NextResponse) => {
+	try {
+	} catch (error) {
+		console.log(error);
+	}
+};

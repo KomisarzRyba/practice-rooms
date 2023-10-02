@@ -1,5 +1,5 @@
 import Login from '@/components/Login';
-import UserWorkspaces from '@/components/UserStudios';
+import UserStudios from '@/components/UserStudios';
 import { buttonVariants } from '@/components/ui/button';
 import {
 	Card,
@@ -10,9 +10,7 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { getAuthSession } from '@/lib/auth';
-import { ReloadIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
-import { Suspense } from 'react';
 
 export default async function Home() {
 	const session = await getAuthSession();
@@ -37,13 +35,7 @@ export default async function Home() {
 				</CardHeader>
 				<CardContent>
 					<div className='grid grid-cols-1 gap-2 font-medium sm:text-lg sm:grid-cols-2'>
-						{/* <Suspense
-							fallback={
-								<ReloadIcon className='w-8 h-8 animate-spin' />
-							}
-						> */}
-						<UserWorkspaces />
-						{/* </Suspense> */}
+						<UserStudios />
 					</div>
 				</CardContent>
 				<CardFooter className='justify-end gap-2'>

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { room, studio } from '../../../prisma/zod';
 
 export const newStudio = z.object({
 	name: z

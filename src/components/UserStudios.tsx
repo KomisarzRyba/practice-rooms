@@ -22,7 +22,7 @@ const UserWorkspaces: FC = async () => {
 			],
 		},
 	});
-	if (!studios) {
+	if (!studios || studios.length === 0) {
 		return (
 			<div className='w-full px-4 py-2 border rounded-lg bg-secondary'>
 				<div className='flex items-center gap-4'>
@@ -40,7 +40,6 @@ const UserWorkspaces: FC = async () => {
 			</div>
 		);
 	}
-	console.log(studios);
 	return (
 		<>
 			{studios.map((w, i) => {
