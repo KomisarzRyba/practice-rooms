@@ -3,16 +3,19 @@
 import { cn } from '@/lib/tw-utils';
 import { NewStudio, newStudio } from '@/lib/validators/studio';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
+import { string } from 'zod';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { LoadingButton } from './ui/loading-button';
 import { toast } from './ui/use-toast';
 
 const CreateStudioForm: FC = () => {
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -24,7 +27,8 @@ const CreateStudioForm: FC = () => {
 		mutationKey: ['create_studio'],
 		mutationFn: async (payload: NewStudio) => {
 			const { data } = await axios.post('/api/studio', payload);
-			return data;
+			const createdStudioId = string().parse(data);
+			return createdStudioId;
 		},
 		onError: (error) => {
 			console.log(error);
@@ -42,7 +46,8 @@ const CreateStudioForm: FC = () => {
 				variant: 'destructive',
 			});
 		},
-		onSuccess: () => {
+		onSuccess: (createdStudioId) => {
+			router.push(`/studio/${createdStudioId}/settings`);
 			return toast({
 				title: 'Success!',
 				description: 'Your new Studio has been created!',

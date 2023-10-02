@@ -7,5 +7,4 @@ export const newStudio = z.object({
 		.max(127),
 	description: z.optional(z.string().max(255)),
 });
-
 export type NewStudio = z.infer<typeof newStudio>;

@@ -27,14 +27,14 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 			});
 		}
 
-		await db.studio.create({
+		const createdStudio = await db.studio.create({
 			data: {
 				name: body.name,
 				description: body.description,
 				creatorId: session.user.id,
 			},
 		});
-		return new NextResponse('OK', { status: 201 });
+		return new NextResponse(createdStudio.id, { status: 201 });
 	} catch (error) {
 		console.log(error);
 		if (error instanceof ZodError) {
