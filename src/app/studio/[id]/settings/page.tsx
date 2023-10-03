@@ -1,4 +1,5 @@
-import StudioSettingsMenu from '@/components/menu/StudioSettingsMenu';
+import SettingsMenuSection from '@/components/settings/SettingsMenuSection';
+import StudioGeneralSettings from '@/components/settings/StudioGeneralSettings';
 import {
 	Card,
 	CardContent,
@@ -22,9 +23,6 @@ const StudioSettingsPage: FC<StudioSettingsPageProps> = async ({ params }) => {
 		where: {
 			id,
 		},
-		include: {
-			rooms: true,
-		},
 	});
 	return (
 		<main className='container flex flex-col items-center py-8'>
@@ -32,12 +30,14 @@ const StudioSettingsPage: FC<StudioSettingsPageProps> = async ({ params }) => {
 				<CardHeader>
 					<CardTitle className='flex items-center gap-2 text-2xl'>
 						<GearIcon className='w-6 h-6' />
-						Settings
+						Settings{' '}
+						<span className='font-light'>- {studio?.name}</span>
 					</CardTitle>
-					<CardDescription>for {studio?.name}</CardDescription>
+					<CardDescription>General</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<StudioSettingsMenu studio={studio!} />
+					{/* <StudioSettingsMenu studio={studio!} /> */}
+					<StudioGeneralSettings studio={studio!} />
 				</CardContent>
 			</Card>
 		</main>

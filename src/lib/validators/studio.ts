@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { room, studio } from '../../../prisma/zod';
 
 export const newStudio = z.object({
 	name: z
@@ -9,3 +8,6 @@ export const newStudio = z.object({
 	description: z.optional(z.string().max(255)),
 });
 export type NewStudio = z.infer<typeof newStudio>;
+
+export const studioGeneralSettings = newStudio;
+export type StudioGeneralSettings = z.infer<typeof studioGeneralSettings>;

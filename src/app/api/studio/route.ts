@@ -3,6 +3,7 @@ import { db } from '@/lib/db';
 import { newStudio } from '@/lib/validators/studio';
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
+import { StudioUpdateArgsSchema } from '../../../../prisma/generated/zod';
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
 	try {
@@ -48,7 +49,36 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
 export const PATCH = async (req: NextRequest, res: NextResponse) => {
 	try {
+		const input = StudioUpdateArgsSchema.parse(await req.json());
+
+		const session = await getAuthSession();
+		if (!session?.user) {
+			return new NextResponse('You must be signed in to edit a Studio.', {
+				status: 401,
+			});
+		}
+
+		const existingStudio = await db.studio.findUnique({
+			where: { id: input.where.id },
+			select: { creatorId: true },
+		});
+		if (existingStudio?.creatorId !== session.user.id) {
+			return new NextResponse(
+				'You are not authorized to edit a Studio.',
+				{ status: 401 }
+			);
+		}
+
+		await db.studio.update(input);
+
+		return new NextResponse('OK', { status: 201 });
 	} catch (error) {
 		console.log(error);
+		if (error instanceof ZodError) {
+			return new NextResponse('Invalid request payload.', {
+				status: 400,
+			});
+		}
+		return new NextResponse('Internal server error', { status: 500 });
 	}
 };

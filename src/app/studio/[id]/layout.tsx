@@ -43,7 +43,7 @@ const StudioLayout: FC<PropsWithChildren<StudioLayoutProps>> = ({
 						/>
 						<SidebarLink
 							href={`/studio/${id}/settings/rooms`}
-							label='Edit Practice Rooms'
+							label='Manage Rooms'
 						/>
 					</SidebarLink>
 				</>
