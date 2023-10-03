@@ -14,7 +14,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import SettingsMenuSection from './SettingsMenuSection';
+import MenuSection from '@/components/MenuSection';
 
 interface StudioGeneralSettingsProps {
 	studio: Studio;
@@ -67,7 +67,7 @@ const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
 	});
 	return (
 		<div className='flex flex-col gap-2'>
-			<SettingsMenuSection>
+			<MenuSection>
 				<h2>Display</h2>
 				<form
 					onSubmit={handleSubmit((data) => save(data))}
@@ -93,7 +93,7 @@ const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
 						Save
 					</LoadingButton>
 				</form>
-			</SettingsMenuSection>
+			</MenuSection>
 		</div>
 	);
 };

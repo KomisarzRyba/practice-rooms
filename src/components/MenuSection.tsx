@@ -1,7 +1,7 @@
 import { cn } from '@/lib/tw-utils';
 import { ComponentProps, FC, PropsWithChildren } from 'react';
 
-const SettingsMenuSection: FC<PropsWithChildren<ComponentProps<'div'>>> = ({
+const MenuSection: FC<PropsWithChildren<ComponentProps<'div'>>> = ({
 	children,
 	className,
 	...props
@@ -20,4 +20,4 @@ const SettingsMenuSection: FC<PropsWithChildren<ComponentProps<'div'>>> = ({
 	);
 };
 
-export default SettingsMenuSection;
+export default MenuSection;
