@@ -10,9 +10,8 @@ import {
 } from '@/lib/validators/studio';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Prisma, Studio } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import SettingsMenuSection from './SettingsMenuSection';
@@ -22,26 +21,29 @@ interface StudioGeneralSettingsProps {
 }
 
 const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
-	const router = useRouter();
+	const queryClient = useQueryClient();
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isDirty },
+		formState: { errors },
 	} = useForm<StudioGeneralSettings>({
 		resolver: zodResolver(studioGeneralSettings),
 		defaultValues: {
 			name: studio.name,
-			description: studio.description || '',
+			description: studio.description || undefined,
 		},
 	});
 	const { mutate: save, isLoading } = useMutation({
-		mutationKey: ['update_studio'],
+		mutationKey: ['update', 'studio', studio.id],
 		mutationFn: async (payload: StudioGeneralSettings) => {
 			const prismaInput: Prisma.StudioUpdateArgs = {
 				where: { id: studio.id },
 				data: { ...payload },
 			};
-			const { data } = await axios.patch('/api/studio', prismaInput);
+			const { data } = await axios.patch(
+				`/api/studio/${studio.id}`,
+				prismaInput
+			);
 			return data;
 		},
 		onError: (error) => {
@@ -53,11 +55,13 @@ const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
 				variant: 'destructive',
 			});
 		},
-		onSuccess: () => {
-			router.refresh();
+		onSuccess: (updatedStudio) => {
+			queryClient.invalidateQueries({
+				queryKey: ['studio'],
+			});
 			return toast({
 				title: 'Success!',
-				description: studio.name + ' has been updated!',
+				description: updatedStudio.name + ' has been updated!',
 			});
 		},
 	});
@@ -84,7 +88,6 @@ const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
 					</div>
 					<LoadingButton
 						isLoading={isLoading}
-						disabled={!isDirty}
 						className='place-self-end'
 					>
 						Save

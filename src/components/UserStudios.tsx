@@ -1,28 +1,17 @@
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db';
+'use client';
+
+import { useGetJoinedStudios } from '@/lib/queries/hooks/query';
 import { ValueNoneIcon } from '@radix-ui/react-icons';
+import { useSession } from 'next-auth/react';
 import { FC } from 'react';
 import StudioCard from './StudioCard';
+import { Skeleton } from './ui/skeleton';
 
-const UserWorkspaces: FC = async () => {
-	const session = await getAuthSession();
-	const studios = await db.studio.findMany({
-		where: {
-			OR: [
-				{
-					creatorId: session?.user.id,
-				},
-				{
-					members: {
-						every: {
-							id: session?.user.id,
-						},
-					},
-				},
-			],
-		},
-	});
-	if (!studios || studios.length === 0) {
+const UserWorkspaces: FC = () => {
+	const { data: session } = useSession();
+	const { data: studios, isLoading } = useGetJoinedStudios();
+
+	if (!isLoading && (!studios || studios.length === 0)) {
 		return (
 			<div className='w-full px-4 py-2 border rounded-lg bg-secondary'>
 				<div className='flex items-center gap-4'>
@@ -42,17 +31,21 @@ const UserWorkspaces: FC = async () => {
 	}
 	return (
 		<>
-			{studios.map((w, i) => {
-				return (
-					<StudioCard
-						key={i}
-						id={w.id}
-						name={w.name}
-						description={w.description}
-						createdByUser={session?.user.id === w.creatorId}
-					/>
-				);
-			})}
+			{!isLoading ? (
+				studios!.map((w, i) => {
+					return (
+						<StudioCard
+							key={i}
+							id={w.id}
+							name={w.name}
+							description={w.description}
+							createdByUser={session?.user.id === w.creatorId}
+						/>
+					);
+				})
+			) : (
+				<Skeleton className='w-full h-24 col-span-2' />
+			)}
 		</>
 	);
 };

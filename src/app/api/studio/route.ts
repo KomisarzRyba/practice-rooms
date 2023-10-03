@@ -5,6 +5,41 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 import { StudioUpdateArgsSchema } from '../../../../prisma/generated/zod';
 
+export const GET = async (req: NextRequest, res: NextResponse) => {
+	try {
+		const session = await getAuthSession();
+		if (!session?.user) {
+			return new NextResponse('You must be signed in to Studios.', {
+				status: 401,
+			});
+		}
+
+		const studios = await db.studio.findMany({
+			where: {
+				OR: [
+					{
+						creatorId: session?.user.id,
+					},
+					{
+						members: {
+							every: {
+								id: session?.user.id,
+							},
+						},
+					},
+				],
+			},
+		});
+		if (!studios || studios.length === 0) {
+			return new NextResponse('Not found', { status: 404 });
+		}
+		return NextResponse.json(studios, { status: 200 });
+	} catch (error) {
+		console.log(error);
+		return NextResponse.json(error, { status: 500 });
+	}
+};
+
 export const POST = async (req: NextRequest, res: NextResponse) => {
 	try {
 		const body = newStudio.parse(await req.json());
@@ -36,42 +71,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 			},
 		});
 		return new NextResponse(createdStudio.id, { status: 201 });
-	} catch (error) {
-		console.log(error);
-		if (error instanceof ZodError) {
-			return new NextResponse('Invalid request payload.', {
-				status: 400,
-			});
-		}
-		return new NextResponse('Internal server error', { status: 500 });
-	}
-};
-
-export const PATCH = async (req: NextRequest, res: NextResponse) => {
-	try {
-		const input = StudioUpdateArgsSchema.parse(await req.json());
-
-		const session = await getAuthSession();
-		if (!session?.user) {
-			return new NextResponse('You must be signed in to edit a Studio.', {
-				status: 401,
-			});
-		}
-
-		const existingStudio = await db.studio.findUnique({
-			where: { id: input.where.id },
-			select: { creatorId: true },
-		});
-		if (existingStudio?.creatorId !== session.user.id) {
-			return new NextResponse(
-				'You are not authorized to edit a Studio.',
-				{ status: 401 }
-			);
-		}
-
-		await db.studio.update(input);
-
-		return new NextResponse('OK', { status: 201 });
 	} catch (error) {
 		console.log(error);
 		if (error instanceof ZodError) {

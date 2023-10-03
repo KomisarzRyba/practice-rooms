@@ -7,7 +7,7 @@ import { z } from 'zod';
 export const StudioSchema = z.object({
   id: z.string().cuid(),
   name: z.string(),
-  description: z.string().nullish(),
+  description: z.string().nullable(),
   creatorId: z.string(),
 })
 

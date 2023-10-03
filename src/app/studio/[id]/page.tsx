@@ -1,4 +1,7 @@
-import { db } from '@/lib/db';
+'use client';
+
+import { Skeleton } from '@/components/ui/skeleton';
+import { useGetStudio } from '@/lib/queries/hooks/query';
 import { FC } from 'react';
 
 interface StudioPageProps {
@@ -7,18 +10,18 @@ interface StudioPageProps {
 	};
 }
 
-const StudioPage: FC<StudioPageProps> = async ({ params }) => {
+const StudioPage: FC<StudioPageProps> = ({ params }) => {
 	const { id } = params;
-	const studio = await db.studio.findUnique({
-		where: {
-			id,
-		},
-	});
+	const { data: studio, isLoading } = useGetStudio({ studioId: id });
 	return (
 		<main className='container py-8'>
-			{studio?.name}
+			{studio?.name || <Skeleton className='w-full h-4' />}
 			<br />
-			{studio?.description}
+			{isLoading ? (
+				<Skeleton className='w-full h-4' />
+			) : (
+				studio?.description
+			)}
 		</main>
 	);
 };
