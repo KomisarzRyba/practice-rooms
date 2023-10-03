@@ -10,7 +10,7 @@ const SidebarLayout: FC<PropsWithChildren<SidebarLayoutProps>> = ({
 }) => {
 	return (
 		<div className='relative w-full'>
-			<div className='fixed inset-y-0 left-0 flex flex-col items-end w-48 h-screen gap-4 px-8 py-16 min-w-fit bg-secondary'>
+			<div className='fixed inset-y-0 left-0 flex flex-col items-end w-48 h-screen gap-2 px-6 py-16 bg-secondary'>
 				{sidebarContent}
 			</div>
 			<div className='pl-48'>{children}</div>

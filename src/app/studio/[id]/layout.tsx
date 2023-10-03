@@ -1,7 +1,7 @@
 import SidebarLayout from '@/components/SidebarLayout';
 import SidebarLink from '@/components/SidebarLink';
 import { buttonVariants } from '@/components/ui/button';
-import { GearIcon, HomeIcon } from '@radix-ui/react-icons';
+import { GearIcon, HomeIcon, PersonIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { FC, PropsWithChildren } from 'react';
 
@@ -20,13 +20,31 @@ const StudioLayout: FC<PropsWithChildren<StudioLayoutProps>> = ({
 		<SidebarLayout
 			sidebarContent={
 				<>
-					<SidebarLink href={`/studio/${id}`}>
-						<HomeIcon className='group-hover:animate-bounce' />
-						Studio Home
-					</SidebarLink>
-					<SidebarLink href={`/studio/${id}/settings`}>
-						<GearIcon className='group-hover:animate-spin' />
-						Settings
+					<SidebarLink
+						href={`/studio/${id}`}
+						label='Studio Home'
+						decoration={<HomeIcon />}
+					/>
+					<SidebarLink
+						href={`/studio/${id}/members`}
+						label='Members'
+						decoration={<PersonIcon />}
+					/>
+					<SidebarLink
+						href={`/studio/${id}/settings`}
+						label='Settings'
+						decoration={
+							<GearIcon className='group-hover:animate-spin' />
+						}
+					>
+						<SidebarLink
+							href={`/studio/${id}/settings`}
+							label='General'
+						/>
+						<SidebarLink
+							href={`/studio/${id}/settings/rooms`}
+							label='Edit Practice Rooms'
+						/>
 					</SidebarLink>
 				</>
 			}
