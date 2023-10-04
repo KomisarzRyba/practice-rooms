@@ -1,8 +1,6 @@
 import SidebarLayout from '@/components/SidebarLayout';
 import SidebarLink from '@/components/SidebarLink';
-import { buttonVariants } from '@/components/ui/button';
 import { GearIcon, HomeIcon, PersonIcon } from '@radix-ui/react-icons';
-import Link from 'next/link';
 import { FC, PropsWithChildren } from 'react';
 
 interface StudioLayoutProps {
@@ -44,6 +42,10 @@ const StudioLayout: FC<PropsWithChildren<StudioLayoutProps>> = ({
 						<SidebarLink
 							href={`/studio/${id}/settings/rooms`}
 							label='Manage Rooms'
+						/>
+						<SidebarLink
+							href={`/studio/${id}/settings/members`}
+							label='Manage Members'
 						/>
 					</SidebarLink>
 				</>

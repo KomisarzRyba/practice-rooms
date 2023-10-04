@@ -3,13 +3,12 @@ import { db } from '@/lib/db';
 import { newStudio } from '@/lib/validators/studio';
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
-import { StudioUpdateArgsSchema } from '../../../../prisma/generated/zod';
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
 	try {
 		const session = await getAuthSession();
 		if (!session?.user) {
-			return new NextResponse('You must be signed in to Studios.', {
+			return new NextResponse('You must be signed in to fetch Studios.', {
 				status: 401,
 			});
 		}
@@ -68,6 +67,11 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 				name: body.name,
 				description: body.description,
 				creatorId: session.user.id,
+				members: {
+					connect: {
+						id: session.user.id,
+					},
+				},
 			},
 		});
 		return new NextResponse(createdStudio.id, { status: 201 });
