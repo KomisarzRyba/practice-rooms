@@ -9,7 +9,7 @@ const MenuSection: FC<PropsWithChildren<ComponentProps<'div'>>> = ({
 	return (
 		<div
 			className={cn(
-				'px-3 py-2 space-y-2 rounded-lg border',
+				'px-3 py-2 space-y-2 rounded-lg border bg-secondary text-secondary-foreground',
 				'[&>h2]:text-lg [&>h2]:font-medium',
 				className
 			)}

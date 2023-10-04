@@ -77,14 +77,22 @@ const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
 						<Label htmlFor='name'>
 							{errors.name?.message || 'Studio Name'}
 						</Label>
-						<Input id='name' {...register('name')} />
+						<Input
+							id='name'
+							{...register('name')}
+							className='bg-card'
+						/>
 					</div>
 					<div>
 						<Label htmlFor='description'>
 							{errors.description?.message ||
 								'Studio Description'}
 						</Label>
-						<Input id='description' {...register('description')} />
+						<Input
+							id='description'
+							{...register('description')}
+							className='bg-card'
+						/>
 					</div>
 					<LoadingButton
 						isLoading={isLoading}

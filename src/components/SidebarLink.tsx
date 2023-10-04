@@ -11,12 +11,11 @@ import {
 	AccordionTrigger,
 } from './ui/accordion';
 import { buttonVariants } from './ui/button';
-import { Url } from 'next/dist/shared/lib/router/router';
 
-interface SidebarLinkProps {
-	href: Url;
+interface SidebarLinkProps extends LinkProps {
 	label: string;
 	decoration?: ReactNode;
+	className?: string;
 }
 
 const SidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
@@ -24,6 +23,7 @@ const SidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
 	label,
 	decoration,
 	href,
+	className,
 	...props
 }) => {
 	const pathname = usePathname();
@@ -33,7 +33,12 @@ const SidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
 			href={href}
 			className={buttonVariants({
 				variant: 'link',
-				className: cn('gap-2 group', active && 'underline'),
+				className: cn(
+					'gap-2 group',
+					'text-secondary-foreground',
+					active && 'underline',
+					className
+				),
 			})}
 			{...props}
 		>
@@ -52,6 +57,8 @@ const SidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
 						href={href}
 						label={label}
 						decoration={decoration}
+						className={className}
+						{...props}
 					/>
 				</AccordionTrigger>
 				<AccordionContent className='text-right'>
