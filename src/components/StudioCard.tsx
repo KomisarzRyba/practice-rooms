@@ -1,15 +1,15 @@
 import {
 	Card,
+	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
 import { cn } from '@/lib/tw-utils';
-import { BackpackIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { FC, HTMLAttributes } from 'react';
 import CreatorSymbol from './CreatorSymbol';
+import { useGetMembersWithCreator } from '@/lib/queries/hooks/query';
 
 interface StudioCardProps extends HTMLAttributes<HTMLDivElement> {
 	id: string;
@@ -25,6 +25,7 @@ const StudioCard: FC<StudioCardProps> = ({
 	className,
 	...props
 }) => {
+	const { data } = useGetMembersWithCreator({ studioId: id });
 	return (
 		<Link href={`/studio/${id}`}>
 			<Card
@@ -35,7 +36,7 @@ const StudioCard: FC<StudioCardProps> = ({
 				{...props}
 			>
 				<CardHeader>
-					<CardTitle className='flex items-center gap-2'>
+					<CardTitle className='flex items-center gap-2 text-xl'>
 						{name}
 						{createdByUser && <CreatorSymbol />}
 					</CardTitle>
@@ -43,6 +44,23 @@ const StudioCard: FC<StudioCardProps> = ({
 						<CardDescription>{description}</CardDescription>
 					)}
 				</CardHeader>
+				<CardContent>
+					<div className='flex gap-4'>
+						<h3 className='font-medium shrink-0'>Members:</h3>
+						<div className='flex flex-wrap'>
+							{data?.members?.map((member, i) => {
+								return (
+									<span
+										key={i}
+										className='mx-2 text-muted-foreground'
+									>
+										{member.name}
+									</span>
+								);
+							})}
+						</div>
+					</div>
+				</CardContent>
 			</Card>
 		</Link>
 	);

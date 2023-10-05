@@ -24,11 +24,7 @@ export const GET = async (req: NextRequest, { params }: RouteProps) => {
 			},
 			select: {
 				members: true,
-				creator: {
-					select: {
-						id: true,
-					},
-				},
+				creator: true,
 			},
 		});
 

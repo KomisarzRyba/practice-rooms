@@ -41,7 +41,7 @@ export const getMembersWithCreator = async ({ studioId }: GetMembersParams) => {
 		const { data } = await client.get(`/studio/${studioId}/members`);
 		return object({
 			members: array(UserSchema),
-			creator: UserSchema.pick({ id: true }),
+			creator: UserSchema,
 		}).parse(data);
 	} catch (error) {
 		console.log(error);
@@ -56,6 +56,16 @@ export const getInvitedUserEmails = async ({
 	try {
 		const { data } = await client.get(`/studio/${studioId}/invited`);
 		return array(string().email()).parse(data);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export const getPendingStudios = async () => {
+	const client = await getAuthorizedApiClient();
+	try {
+		const { data } = await client.get(`/studio/pending`);
+		return array(StudioSchema).parse(data);
 	} catch (error) {
 		console.log(error);
 	}

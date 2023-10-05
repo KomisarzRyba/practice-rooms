@@ -6,6 +6,7 @@ import {
 	getInvitedUserEmails,
 	getJoinedStudios,
 	getMembersWithCreator,
+	getPendingStudios,
 	getStudio,
 } from '../client/query';
 
@@ -29,4 +30,8 @@ export const useGetInvitedUserEmails = ({
 	return useQuery(['invited', studioId], () =>
 		getInvitedUserEmails({ studioId })
 	);
+};
+
+export const useGetPendingStudios = () => {
+	return useQuery(['studio', 'pending'], getPendingStudios);
 };
