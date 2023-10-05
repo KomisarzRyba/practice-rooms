@@ -7,12 +7,12 @@ interface LoadingButtonProps extends ButtonProps {
 }
 
 export const LoadingButton: FC<LoadingButtonProps> = ({
-	isLoading = false,
+	isLoading,
 	children,
 	...props
 }) => {
 	return (
-		<Button {...props}>
+		<Button disabled={isLoading} {...props}>
 			{isLoading ? (
 				<ReloadIcon className='w-4 h-4 mr-2 animate-spin' />
 			) : null}

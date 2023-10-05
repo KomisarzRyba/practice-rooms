@@ -1,6 +1,5 @@
 'use client';
 
-import StudioGeneralSettings from '@/components/settings/StudioGeneralSettings';
 import StudioMembersSettings from '@/components/settings/StudioMembersSettings';
 import {
 	Card,
