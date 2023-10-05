@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import {
+	GetInvitedUserEmailsParams,
 	GetMembersParams,
 	GetStudioParams,
+	getInvitedUserEmails,
 	getJoinedStudios,
 	getMembersWithCreator,
 	getStudio,
@@ -18,5 +20,13 @@ export const useGetJoinedStudios = () => {
 export const useGetMembersWithCreator = ({ studioId }: GetMembersParams) => {
 	return useQuery(['members', studioId], () =>
 		getMembersWithCreator({ studioId })
+	);
+};
+
+export const useGetInvitedUserEmails = ({
+	studioId,
+}: GetInvitedUserEmailsParams) => {
+	return useQuery(['invited', studioId], () =>
+		getInvitedUserEmails({ studioId })
 	);
 };

@@ -10,6 +10,7 @@ import { Label } from './ui/label';
 import { LoadingButton } from './ui/loading-button';
 import { toast } from './ui/use-toast';
 import { AxiosError } from 'axios';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface AddMembersFormProps extends ComponentProps<'form'> {
 	studio: Studio;
@@ -33,6 +34,7 @@ const AddMembersForm: FC<AddMembersFormProps> = ({
 		},
 	});
 	const { mutate: addMember, isLoading } = useAddMember(studio.id);
+	const queryClient = useQueryClient();
 	return (
 		<form
 			onSubmit={handleSubmit((data) => {
@@ -54,6 +56,7 @@ const AddMembersForm: FC<AddMembersFormProps> = ({
 					},
 					onSuccess: (nameOrEmail) => {
 						reset();
+						queryClient.invalidateQueries(['invited', studio.id]);
 						return toast({
 							title: 'Success!',
 							description:

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { StudioSchema, UserSchema } from '../../../../prisma/generated/zod';
-import { object, array } from 'zod';
+import { object, array, string } from 'zod';
 
 const getAuthorizedApiClient = async () => {
 	let headers: Record<string, string> = {};
@@ -43,6 +43,19 @@ export const getMembersWithCreator = async ({ studioId }: GetMembersParams) => {
 			members: array(UserSchema),
 			creator: UserSchema.pick({ id: true }),
 		}).parse(data);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export type GetInvitedUserEmailsParams = GetStudioParams;
+export const getInvitedUserEmails = async ({
+	studioId,
+}: GetInvitedUserEmailsParams) => {
+	const client = await getAuthorizedApiClient();
+	try {
+		const { data } = await client.get(`/studio/${studioId}/invited`);
+		return array(string().email()).parse(data);
 	} catch (error) {
 		console.log(error);
 	}
