@@ -3,7 +3,7 @@ import {
 	GetMembersParams,
 	GetStudioParams,
 	getJoinedStudios,
-	getMembers,
+	getMembersWithCreator,
 	getStudio,
 } from '../client/query';
 
@@ -15,8 +15,8 @@ export const useGetJoinedStudios = () => {
 	return useQuery(['studio', 'joined'], getJoinedStudios);
 };
 
-export const useGetMembers = ({ studioId, withCreator }: GetMembersParams) => {
+export const useGetMembersWithCreator = ({ studioId }: GetMembersParams) => {
 	return useQuery(['members', studioId], () =>
-		getMembers({ studioId, withCreator })
+		getMembersWithCreator({ studioId })
 	);
 };

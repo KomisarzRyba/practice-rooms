@@ -1,6 +1,7 @@
 'use client';
 
 import StudioGeneralSettings from '@/components/settings/StudioGeneralSettings';
+import StudioMembersSettings from '@/components/settings/StudioMembersSettings';
 import {
 	Card,
 	CardContent,
@@ -41,7 +42,7 @@ const MembersPage: FC<MembersPageProps> = ({ params }) => {
 				</CardHeader>
 				<CardContent>
 					{studio ? (
-						<StudioGeneralSettings studio={studio} />
+						<StudioMembersSettings studio={studio} />
 					) : (
 						<Skeleton className='w-full h-48' />
 					)}

@@ -12,7 +12,10 @@ import {
 	CardContent,
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useGetMembers, useGetStudio } from '@/lib/queries/hooks/query';
+import {
+	useGetMembersWithCreator,
+	useGetStudio,
+} from '@/lib/queries/hooks/query';
 import { GearIcon, PersonIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -26,7 +29,7 @@ interface ManageMembersPageProps {
 const ManageMembersPage: FC<ManageMembersPageProps> = ({ params }) => {
 	const { id } = params;
 	const { data: studio } = useGetStudio({ studioId: id });
-	const { data: membersWithCreator } = useGetMembers({
+	const { data: membersWithCreator } = useGetMembersWithCreator({
 		studioId: id,
 	});
 	return (

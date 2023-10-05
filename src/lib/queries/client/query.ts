@@ -35,7 +35,7 @@ export const getJoinedStudios = async () => {
 };
 
 export type GetMembersParams = GetStudioParams;
-export const getMembers = async ({ studioId }: GetMembersParams) => {
+export const getMembersWithCreator = async ({ studioId }: GetMembersParams) => {
 	const client = await getAuthorizedApiClient();
 	try {
 		const { data } = await client.get(`/studio/${studioId}/members`);
