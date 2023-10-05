@@ -11,6 +11,7 @@ export const StudioOrderByWithRelationInputSchema: z.ZodType<Prisma.StudioOrderB
   name: z.lazy(() => SortOrderSchema).optional(),
   description: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   creatorId: z.lazy(() => SortOrderSchema).optional(),
+  invitedUserEmails: z.lazy(() => SortOrderSchema).optional(),
   creator: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
   members: z.lazy(() => UserOrderByRelationAggregateInputSchema).optional(),
   rooms: z.lazy(() => RoomOrderByRelationAggregateInputSchema).optional()

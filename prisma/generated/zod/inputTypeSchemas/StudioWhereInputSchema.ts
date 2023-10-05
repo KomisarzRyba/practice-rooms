@@ -2,6 +2,7 @@ import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { StringFilterSchema } from './StringFilterSchema';
 import { StringNullableFilterSchema } from './StringNullableFilterSchema';
+import { StringNullableListFilterSchema } from './StringNullableListFilterSchema';
 import { UserRelationFilterSchema } from './UserRelationFilterSchema';
 import { UserWhereInputSchema } from './UserWhereInputSchema';
 import { UserListRelationFilterSchema } from './UserListRelationFilterSchema';
@@ -15,6 +16,7 @@ export const StudioWhereInputSchema: z.ZodType<Prisma.StudioWhereInput> = z.obje
   name: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   description: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   creatorId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  invitedUserEmails: z.lazy(() => StringNullableListFilterSchema).optional(),
   creator: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
   members: z.lazy(() => UserListRelationFilterSchema).optional(),
   rooms: z.lazy(() => RoomListRelationFilterSchema).optional()

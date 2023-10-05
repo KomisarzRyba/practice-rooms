@@ -2,6 +2,7 @@ import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { StringFieldUpdateOperationsInputSchema } from './StringFieldUpdateOperationsInputSchema';
 import { NullableStringFieldUpdateOperationsInputSchema } from './NullableStringFieldUpdateOperationsInputSchema';
+import { StudioUpdateinvitedUserEmailsInputSchema } from './StudioUpdateinvitedUserEmailsInputSchema';
 import { RoomUncheckedUpdateManyWithoutStudioNestedInputSchema } from './RoomUncheckedUpdateManyWithoutStudioNestedInputSchema';
 
 export const StudioUncheckedUpdateWithoutMembersInputSchema: z.ZodType<Prisma.StudioUncheckedUpdateWithoutMembersInput> = z.object({
@@ -9,6 +10,7 @@ export const StudioUncheckedUpdateWithoutMembersInputSchema: z.ZodType<Prisma.St
   name: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   creatorId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  invitedUserEmails: z.union([ z.lazy(() => StudioUpdateinvitedUserEmailsInputSchema),z.string().array() ]).optional(),
   rooms: z.lazy(() => RoomUncheckedUpdateManyWithoutStudioNestedInputSchema).optional()
 }).strict();
 

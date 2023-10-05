@@ -6,7 +6,8 @@ export const StudioCountOrderByAggregateInputSchema: z.ZodType<Prisma.StudioCoun
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   description: z.lazy(() => SortOrderSchema).optional(),
-  creatorId: z.lazy(() => SortOrderSchema).optional()
+  creatorId: z.lazy(() => SortOrderSchema).optional(),
+  invitedUserEmails: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export default StudioCountOrderByAggregateInputSchema;

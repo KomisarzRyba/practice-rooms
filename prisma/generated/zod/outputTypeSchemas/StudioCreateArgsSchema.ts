@@ -15,6 +15,7 @@ export const StudioSelectSchema: z.ZodType<Prisma.StudioSelect> = z.object({
   name: z.boolean().optional(),
   description: z.boolean().optional(),
   creatorId: z.boolean().optional(),
+  invitedUserEmails: z.boolean().optional(),
   creator: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
   members: z.union([z.boolean(),z.lazy(() => UserFindManyArgsSchema)]).optional(),
   rooms: z.union([z.boolean(),z.lazy(() => RoomFindManyArgsSchema)]).optional(),

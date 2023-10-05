@@ -47,7 +47,7 @@ const CreateStudioForm: FC = () => {
 			});
 		},
 		onSuccess: (createdStudioId) => {
-			router.push(`/studio/${createdStudioId}/settings`);
+			router.push(`/studio/${createdStudioId}/settings/general`);
 			return toast({
 				title: 'Success!',
 				description: 'Your new Studio has been created!',

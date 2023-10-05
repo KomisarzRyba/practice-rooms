@@ -59,13 +59,14 @@ model VerificationToken {
 }
 
 model Studio {
-  id          String  @id @default(cuid())
-  name        String  @unique
-  description String?
-  creatorId   String
-  creator     User    @relation("creator", fields: [creatorId], references: [id])
-  members     User[]  @relation("member")
-  rooms       Room[]  @relation("rooms_in_studio")
+  id                String   @id @default(cuid())
+  name              String   @unique
+  description       String?
+  creatorId         String
+  creator           User     @relation("creator", fields: [creatorId], references: [id])
+  members           User[]   @relation("member")
+  rooms             Room[]   @relation("rooms_in_studio")
+  invitedUserEmails String[]
 }
 
 model Room {

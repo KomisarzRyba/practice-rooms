@@ -11,6 +11,7 @@ export const StudioOrderByWithAggregationInputSchema: z.ZodType<Prisma.StudioOrd
   name: z.lazy(() => SortOrderSchema).optional(),
   description: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   creatorId: z.lazy(() => SortOrderSchema).optional(),
+  invitedUserEmails: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => StudioCountOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => StudioMaxOrderByAggregateInputSchema).optional(),
   _min: z.lazy(() => StudioMinOrderByAggregateInputSchema).optional()

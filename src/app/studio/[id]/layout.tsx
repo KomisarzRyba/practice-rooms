@@ -36,7 +36,7 @@ const StudioLayout: FC<PropsWithChildren<StudioLayoutProps>> = ({
 						}
 					>
 						<SidebarLink
-							href={`/studio/${id}/settings`}
+							href={`/studio/${id}/settings/general`}
 							label='General'
 						/>
 						<SidebarLink

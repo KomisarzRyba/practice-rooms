@@ -104,6 +104,7 @@ export { VerificationTokenIdentifierTokenCompoundUniqueInputSchema } from './Ver
 export { VerificationTokenCountOrderByAggregateInputSchema } from './VerificationTokenCountOrderByAggregateInputSchema';
 export { VerificationTokenMaxOrderByAggregateInputSchema } from './VerificationTokenMaxOrderByAggregateInputSchema';
 export { VerificationTokenMinOrderByAggregateInputSchema } from './VerificationTokenMinOrderByAggregateInputSchema';
+export { StringNullableListFilterSchema } from './StringNullableListFilterSchema';
 export { UserListRelationFilterSchema } from './UserListRelationFilterSchema';
 export { RoomListRelationFilterSchema } from './RoomListRelationFilterSchema';
 export { UserOrderByRelationAggregateInputSchema } from './UserOrderByRelationAggregateInputSchema';
@@ -140,11 +141,13 @@ export { AccountUncheckedUpdateManyWithoutUserNestedInputSchema } from './Accoun
 export { SessionUncheckedUpdateManyWithoutUserNestedInputSchema } from './SessionUncheckedUpdateManyWithoutUserNestedInputSchema';
 export { StudioUncheckedUpdateManyWithoutCreatorNestedInputSchema } from './StudioUncheckedUpdateManyWithoutCreatorNestedInputSchema';
 export { StudioUncheckedUpdateManyWithoutMembersNestedInputSchema } from './StudioUncheckedUpdateManyWithoutMembersNestedInputSchema';
+export { StudioCreateinvitedUserEmailsInputSchema } from './StudioCreateinvitedUserEmailsInputSchema';
 export { UserCreateNestedOneWithoutStudiosCreatedInputSchema } from './UserCreateNestedOneWithoutStudiosCreatedInputSchema';
 export { UserCreateNestedManyWithoutStudiosJoinedInputSchema } from './UserCreateNestedManyWithoutStudiosJoinedInputSchema';
 export { RoomCreateNestedManyWithoutStudioInputSchema } from './RoomCreateNestedManyWithoutStudioInputSchema';
 export { UserUncheckedCreateNestedManyWithoutStudiosJoinedInputSchema } from './UserUncheckedCreateNestedManyWithoutStudiosJoinedInputSchema';
 export { RoomUncheckedCreateNestedManyWithoutStudioInputSchema } from './RoomUncheckedCreateNestedManyWithoutStudioInputSchema';
+export { StudioUpdateinvitedUserEmailsInputSchema } from './StudioUpdateinvitedUserEmailsInputSchema';
 export { UserUpdateOneRequiredWithoutStudiosCreatedNestedInputSchema } from './UserUpdateOneRequiredWithoutStudiosCreatedNestedInputSchema';
 export { UserUpdateManyWithoutStudiosJoinedNestedInputSchema } from './UserUpdateManyWithoutStudiosJoinedNestedInputSchema';
 export { RoomUpdateManyWithoutStudioNestedInputSchema } from './RoomUpdateManyWithoutStudioNestedInputSchema';

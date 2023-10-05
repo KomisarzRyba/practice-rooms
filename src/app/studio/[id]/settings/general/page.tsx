@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetStudio } from '@/lib/queries/hooks/query';
-import { GearIcon, ReloadIcon } from '@radix-ui/react-icons';
+import { GearIcon } from '@radix-ui/react-icons';
 import { FC } from 'react';
 
 interface StudioSettingsPageProps {
@@ -41,7 +41,7 @@ const StudioSettingsPage: FC<StudioSettingsPageProps> = ({ params }) => {
 				</CardHeader>
 				<CardContent>
 					{studio ? (
-						<StudioGeneralSettings studio={studio!} />
+						<StudioGeneralSettings studio={studio} />
 					) : (
 						<Skeleton className='w-full h-48' />
 					)}

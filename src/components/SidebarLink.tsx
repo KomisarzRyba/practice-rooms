@@ -27,7 +27,10 @@ const SidebarLink: FC<PropsWithChildren<SidebarLinkProps>> = ({
 	...props
 }) => {
 	const pathname = usePathname();
-	const active = href === pathname || href === pathname.split('/').at(-1);
+	const active =
+		href === pathname ||
+		href === pathname.split('/').slice(0, -1).join('/');
+	// console.log(pathname, href);
 	return !children ? (
 		<Link
 			href={href}
