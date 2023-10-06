@@ -9,5 +9,7 @@ export const newStudio = z.object({
 });
 export type NewStudio = z.infer<typeof newStudio>;
 
-export const studioGeneralSettings = newStudio;
+export const studioGeneralSettings = newStudio.extend({
+	studioId: z.string(),
+});
 export type StudioGeneralSettings = z.infer<typeof studioGeneralSettings>;

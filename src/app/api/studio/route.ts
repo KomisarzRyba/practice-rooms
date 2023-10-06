@@ -21,7 +21,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 					},
 					{
 						members: {
-							every: {
+							some: {
 								id: session?.user.id,
 							},
 						},
@@ -29,9 +29,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 				],
 			},
 		});
-		if (!studios || studios.length === 0) {
-			return new NextResponse('Not found', { status: 404 });
-		}
+
 		return NextResponse.json(studios, { status: 200 });
 	} catch (error) {
 		console.log(error);

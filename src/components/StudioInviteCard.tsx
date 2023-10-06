@@ -12,6 +12,7 @@ import { FC, HTMLAttributes } from 'react';
 import CreatorSymbol from './CreatorSymbol';
 import { useGetMembersWithCreator } from '@/lib/queries/hooks/query';
 import { LoadingButton } from './ui/loading-button';
+import { useJoinStudio } from '@/lib/mutations/hooks/mutation';
 
 interface StudioCardProps extends HTMLAttributes<HTMLDivElement> {
 	id: string;
@@ -27,6 +28,7 @@ const StudioCard: FC<StudioCardProps> = ({
 	...props
 }) => {
 	const { data } = useGetMembersWithCreator({ studioId: id });
+	const { mutate: join, isLoading } = useJoinStudio(id);
 	return (
 		<Card {...props}>
 			<CardHeader>
@@ -60,7 +62,9 @@ const StudioCard: FC<StudioCardProps> = ({
 				</div>
 			</CardContent>
 			<CardFooter className='justify-end gap-2'>
-				<LoadingButton>Join</LoadingButton>
+				<LoadingButton isLoading={isLoading} onClick={() => join()}>
+					Join
+				</LoadingButton>
 				<LoadingButton variant='destructive'>Reject</LoadingButton>
 			</CardFooter>
 		</Card>

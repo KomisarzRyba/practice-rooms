@@ -15,7 +15,7 @@ export const useGetStudio = ({ studioId }: GetStudioParams) => {
 };
 
 export const useGetJoinedStudios = () => {
-	return useQuery(['studio', 'joined'], getJoinedStudios);
+	return useQuery(['joined_studios'], getJoinedStudios);
 };
 
 export const useGetMembersWithCreator = ({ studioId }: GetMembersParams) => {
@@ -33,5 +33,5 @@ export const useGetInvitedUserEmails = ({
 };
 
 export const useGetPendingStudios = () => {
-	return useQuery(['studio', 'pending'], getPendingStudios);
+	return useQuery(['pending_studios'], getPendingStudios);
 };

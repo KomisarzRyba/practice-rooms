@@ -1,4 +1,4 @@
-import { useAddMember } from '@/lib/mutations/hooks/mutation';
+import { useAddOrInviteMember } from '@/lib/mutations/hooks/mutation';
 import { cn } from '@/lib/tw-utils';
 import { NewMember, newMember } from '@/lib/validators/member';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,9 +8,6 @@ import { useForm } from 'react-hook-form';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { LoadingButton } from './ui/loading-button';
-import { toast } from './ui/use-toast';
-import { AxiosError } from 'axios';
-import { useQueryClient } from '@tanstack/react-query';
 
 interface AddMembersFormProps extends ComponentProps<'form'> {
 	studio: Studio;
@@ -33,35 +30,13 @@ const AddMembersForm: FC<AddMembersFormProps> = ({
 			email: '',
 		},
 	});
-	const { mutate: addMember, isLoading } = useAddMember(studio.id);
-	const queryClient = useQueryClient();
+	const { mutate: addMember, isLoading } = useAddOrInviteMember(studio.id);
 	return (
 		<form
 			onSubmit={handleSubmit((data) => {
 				addMember(data, {
-					onError: (error) => {
-						console.log(error);
-						if (error instanceof AxiosError) {
-							return toast({
-								title: 'Whoops! Could not add a user...',
-								description: error.response?.data,
-								variant: 'destructive',
-							});
-						}
-						return toast({
-							title: 'Whoops! Could not add a user...',
-							description: 'Please try again later.',
-							variant: 'destructive',
-						});
-					},
-					onSuccess: (nameOrEmail) => {
+					onSuccess: () => {
 						reset();
-						queryClient.invalidateQueries(['invited', studio.id]);
-						return toast({
-							title: 'Success!',
-							description:
-								nameOrEmail + ' has been added to the Studio.',
-						});
 					},
 				});
 			})}

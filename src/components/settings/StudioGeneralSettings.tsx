@@ -1,27 +1,24 @@
 'use client';
 
+import MenuSection from '@/components/MenuSection';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { toast } from '@/components/ui/use-toast';
+import { useUpdateGeneralSettings } from '@/lib/mutations/hooks/mutation';
 import {
 	StudioGeneralSettings,
 	studioGeneralSettings,
 } from '@/lib/validators/studio';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Prisma, Studio } from '@prisma/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { Studio } from '@prisma/client';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import MenuSection from '@/components/MenuSection';
 
 interface StudioGeneralSettingsProps {
 	studio: Studio;
 }
 
 const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
-	const queryClient = useQueryClient();
 	const {
 		register,
 		handleSubmit,
@@ -29,42 +26,13 @@ const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
 	} = useForm<StudioGeneralSettings>({
 		resolver: zodResolver(studioGeneralSettings),
 		defaultValues: {
+			studioId: studio.id,
 			name: studio.name,
-			description: studio.description || undefined,
+			description: studio.description || '',
 		},
 	});
-	const { mutate: save, isLoading } = useMutation({
-		mutationKey: ['update', 'studio', studio.id],
-		mutationFn: async (payload: StudioGeneralSettings) => {
-			const prismaInput: Prisma.StudioUpdateArgs = {
-				where: { id: studio.id },
-				data: { ...payload },
-			};
-			const { data } = await axios.patch(
-				`/api/studio/${studio.id}`,
-				prismaInput
-			);
-			return data;
-		},
-		onError: (error) => {
-			console.log(error);
-			return toast({
-				title: 'There was an error.',
-				description:
-					'Could not save the settings. Please try again later.',
-				variant: 'destructive',
-			});
-		},
-		onSuccess: (updatedStudio) => {
-			queryClient.invalidateQueries({
-				queryKey: ['studio'],
-			});
-			return toast({
-				title: 'Success!',
-				description: updatedStudio.name + ' has been updated!',
-			});
-		},
-	});
+	const { mutate: save, isLoading } = useUpdateGeneralSettings(studio.id);
+
 	return (
 		<div className='flex flex-col gap-2'>
 			<MenuSection>

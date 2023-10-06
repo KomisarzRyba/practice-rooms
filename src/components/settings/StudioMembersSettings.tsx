@@ -16,6 +16,8 @@ import {
 	DialogTrigger,
 } from '../ui/dialog';
 import AddMembersForm from '../AddMembersForm';
+import { useRemoveFromStudio } from '@/lib/mutations/hooks/mutation';
+import { LoadingButton } from '../ui/loading-button';
 
 interface StudioMembersSettingsProps {
 	studio: Studio;
@@ -28,25 +30,36 @@ const StudioMembersSettings: FC<StudioMembersSettingsProps> = ({ studio }) => {
 	const { data: invitedUserEmails } = useGetInvitedUserEmails({
 		studioId: studio.id,
 	});
+	const { mutate: remove, isLoading } = useRemoveFromStudio(studio.id);
 	return (
 		<div className='flex flex-col gap-4'>
 			<MenuSection>
 				<h2>Members</h2>
 				<div className='flex flex-col gap-2'>
 					{membersWithCreator?.members.map((member, i) => {
-						const isCreator =
-							studio.creatorId === membersWithCreator.creator.id;
+						const isCreator = studio.creatorId === member.id;
 						return (
 							<MemberCard
 								key={i}
-								{...member}
+								id={member.id}
+								image={member.image}
+								name={member.name}
 								className='-mx-3 rounded-none border-x-0 border-y bg-card'
 								isCreator={isCreator}
 							>
 								{!isCreator && (
-									<Button variant='destructive'>
+									<LoadingButton
+										isLoading={isLoading}
+										variant='destructive'
+										onClick={() =>
+											remove({
+												studioId: studio.id,
+												userId: member.id,
+											})
+										}
+									>
 										Remove
-									</Button>
+									</LoadingButton>
 								)}
 							</MemberCard>
 						);

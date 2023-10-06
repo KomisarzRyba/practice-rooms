@@ -60,19 +60,21 @@ const ManageMembersPage: FC<ManageMembersPageProps> = ({ params }) => {
 				</CardHeader>
 				<CardContent>
 					{membersWithCreator ? (
-						membersWithCreator.members.map((member, i) => {
-							return (
-								<MemberCard
-									key={i}
-									{...member}
-									isCreator={
-										member.id ===
-										membersWithCreator.creator.id
-									}
-									className='bg-secondary text-secondary-foreground'
-								/>
-							);
-						})
+						<div className='overflow-hidden rounded-md'>
+							{membersWithCreator.members.map((member, i) => {
+								return (
+									<MemberCard
+										key={i}
+										{...member}
+										isCreator={
+											member.id ===
+											membersWithCreator.creator.id
+										}
+										className='rounded-none bg-secondary text-secondary-foreground'
+									/>
+								);
+							})}
+						</div>
 					) : (
 						<Skeleton className='w-full h-48' />
 					)}
