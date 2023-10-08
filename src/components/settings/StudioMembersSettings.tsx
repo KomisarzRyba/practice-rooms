@@ -18,6 +18,7 @@ import {
 import AddMembersForm from '../AddMembersForm';
 import { useRemoveFromStudio } from '@/lib/mutations/hooks/mutation';
 import { LoadingButton } from '../ui/loading-button';
+import RemoveUserButton from './RemoveUserButton';
 
 interface StudioMembersSettingsProps {
 	studio: Studio;
@@ -30,7 +31,6 @@ const StudioMembersSettings: FC<StudioMembersSettingsProps> = ({ studio }) => {
 	const { data: invitedUserEmails } = useGetInvitedUserEmails({
 		studioId: studio.id,
 	});
-	const { mutate: remove, isLoading } = useRemoveFromStudio(studio.id);
 	return (
 		<div className='flex flex-col gap-4'>
 			<MenuSection>
@@ -48,18 +48,10 @@ const StudioMembersSettings: FC<StudioMembersSettingsProps> = ({ studio }) => {
 								isCreator={isCreator}
 							>
 								{!isCreator && (
-									<LoadingButton
-										isLoading={isLoading}
-										variant='destructive'
-										onClick={() =>
-											remove({
-												studioId: studio.id,
-												userId: member.id,
-											})
-										}
-									>
-										Remove
-									</LoadingButton>
+									<RemoveUserButton
+										studioId={studio.id}
+										userId={member.id}
+									/>
 								)}
 							</MemberCard>
 						);

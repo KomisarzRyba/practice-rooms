@@ -85,7 +85,7 @@ export const useRemoveFromStudio = (studioId: string) => {
 				});
 			}
 			return toast({
-				title: 'Bye bye, looser!',
+				title: 'Bye bye, loser!',
 				description: `${removedUser.name} has been removed from ${removedUser.studioName}.`,
 			});
 		},
