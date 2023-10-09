@@ -5,6 +5,7 @@ import { NullableStringFieldUpdateOperationsInputSchema } from './NullableString
 import { StudioUpdateinvitedUserEmailsInputSchema } from './StudioUpdateinvitedUserEmailsInputSchema';
 import { UserUpdateOneRequiredWithoutStudiosCreatedNestedInputSchema } from './UserUpdateOneRequiredWithoutStudiosCreatedNestedInputSchema';
 import { RoomUpdateManyWithoutStudioNestedInputSchema } from './RoomUpdateManyWithoutStudioNestedInputSchema';
+import { SchedulePropertiesUpdateOneWithoutStudioNestedInputSchema } from './SchedulePropertiesUpdateOneWithoutStudioNestedInputSchema';
 
 export const StudioUpdateWithoutMembersInputSchema: z.ZodType<Prisma.StudioUpdateWithoutMembersInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -12,7 +13,8 @@ export const StudioUpdateWithoutMembersInputSchema: z.ZodType<Prisma.StudioUpdat
   description: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   invitedUserEmails: z.union([ z.lazy(() => StudioUpdateinvitedUserEmailsInputSchema),z.string().array() ]).optional(),
   creator: z.lazy(() => UserUpdateOneRequiredWithoutStudiosCreatedNestedInputSchema).optional(),
-  rooms: z.lazy(() => RoomUpdateManyWithoutStudioNestedInputSchema).optional()
+  rooms: z.lazy(() => RoomUpdateManyWithoutStudioNestedInputSchema).optional(),
+  scheduleProperties: z.lazy(() => SchedulePropertiesUpdateOneWithoutStudioNestedInputSchema).optional()
 }).strict();
 
 export default StudioUpdateWithoutMembersInputSchema;

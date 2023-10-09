@@ -13,6 +13,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { LoadingButton } from './ui/loading-button';
 import { toast } from './ui/use-toast';
+import { useCreateRoom, useCreateStudio } from '@/lib/mutations/hooks/mutation';
 
 const CreateStudioForm: FC = () => {
 	const router = useRouter();
@@ -23,37 +24,7 @@ const CreateStudioForm: FC = () => {
 	} = useForm<NewStudio>({
 		resolver: zodResolver(newStudio),
 	});
-	const { mutate: createStudio, isLoading } = useMutation({
-		mutationKey: ['create_studio'],
-		mutationFn: async (payload: NewStudio) => {
-			const { data } = await axios.post('/api/studio', payload);
-			const createdStudioId = string().parse(data);
-			return createdStudioId;
-		},
-		onError: (error) => {
-			console.log(error);
-			if (error instanceof AxiosError && error.response?.status === 409) {
-				return toast({
-					title: 'Name already taken.',
-					description: 'Please choose a different name.',
-					variant: 'destructive',
-				});
-			}
-			return toast({
-				title: 'There was an error.',
-				description:
-					'Could not create a new Studio. Please try again later.',
-				variant: 'destructive',
-			});
-		},
-		onSuccess: (createdStudioId) => {
-			router.push(`/studio/${createdStudioId}/settings/general`);
-			return toast({
-				title: 'Success!',
-				description: 'Your new Studio has been created!',
-			});
-		},
-	});
+	const { mutate: createStudio, isLoading } = useCreateStudio();
 	return (
 		<form
 			onSubmit={handleSubmit((data) => createStudio(data))}

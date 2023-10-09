@@ -3,11 +3,13 @@ import {
 	GetInvitedUserEmailsParams,
 	GetMembersParams,
 	GetStudioParams,
+	GetStudioRoomsParams,
 	getInvitedUserEmails,
 	getJoinedStudios,
 	getMembersWithCreator,
 	getPendingStudios,
 	getStudio,
+	getStudioRooms,
 } from '../client/query';
 
 export const useGetStudio = ({ studioId }: GetStudioParams) => {
@@ -34,4 +36,8 @@ export const useGetInvitedUserEmails = ({
 
 export const useGetPendingStudios = () => {
 	return useQuery(['pending_studios'], getPendingStudios);
+};
+
+export const useGetStudioRooms = ({ studioId }: GetStudioRoomsParams) => {
+	return useQuery(['rooms', studioId], () => getStudioRooms({ studioId }));
 };

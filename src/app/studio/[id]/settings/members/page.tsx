@@ -13,13 +13,13 @@ import { useGetStudio } from '@/lib/queries/hooks/query';
 import { GearIcon } from '@radix-ui/react-icons';
 import { FC } from 'react';
 
-interface MembersPageProps {
+interface ManageMembersPageProps {
 	params: {
 		id: string;
 	};
 }
 
-const MembersPage: FC<MembersPageProps> = ({ params }) => {
+const ManageMembersPage: FC<ManageMembersPageProps> = ({ params }) => {
 	const { id } = params;
 	const { data: studio } = useGetStudio({ studioId: id });
 
@@ -51,4 +51,4 @@ const MembersPage: FC<MembersPageProps> = ({ params }) => {
 	);
 };
 
-export default MembersPage;
+export default ManageMembersPage;

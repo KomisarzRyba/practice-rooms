@@ -6,6 +6,8 @@ import { RoomOrderByWithRelationInputSchema } from '../inputTypeSchemas/RoomOrde
 import { RoomWhereUniqueInputSchema } from '../inputTypeSchemas/RoomWhereUniqueInputSchema'
 import { RoomScalarFieldEnumSchema } from '../inputTypeSchemas/RoomScalarFieldEnumSchema'
 import { StudioArgsSchema } from "../outputTypeSchemas/StudioArgsSchema"
+import { BookingFindManyArgsSchema } from "../outputTypeSchemas/BookingFindManyArgsSchema"
+import { RoomCountOutputTypeArgsSchema } from "../outputTypeSchemas/RoomCountOutputTypeArgsSchema"
 // Select schema needs to be in file to prevent circular imports
 //------------------------------------------------------
 
@@ -14,6 +16,8 @@ export const RoomSelectSchema: z.ZodType<Prisma.RoomSelect> = z.object({
   name: z.boolean().optional(),
   studioId: z.boolean().optional(),
   studio: z.union([z.boolean(),z.lazy(() => StudioArgsSchema)]).optional(),
+  Booking: z.union([z.boolean(),z.lazy(() => BookingFindManyArgsSchema)]).optional(),
+  _count: z.union([z.boolean(),z.lazy(() => RoomCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
 export const RoomFindManyArgsSchema: z.ZodType<Prisma.RoomFindManyArgs> = z.object({

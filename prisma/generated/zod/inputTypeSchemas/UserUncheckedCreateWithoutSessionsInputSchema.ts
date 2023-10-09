@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { AccountUncheckedCreateNestedManyWithoutUserInputSchema } from './AccountUncheckedCreateNestedManyWithoutUserInputSchema';
 import { StudioUncheckedCreateNestedManyWithoutCreatorInputSchema } from './StudioUncheckedCreateNestedManyWithoutCreatorInputSchema';
 import { StudioUncheckedCreateNestedManyWithoutMembersInputSchema } from './StudioUncheckedCreateNestedManyWithoutMembersInputSchema';
+import { BookingUncheckedCreateNestedManyWithoutOwnerInputSchema } from './BookingUncheckedCreateNestedManyWithoutOwnerInputSchema';
 
 export const UserUncheckedCreateWithoutSessionsInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutSessionsInput> = z.object({
   id: z.string().cuid().optional(),
@@ -12,7 +13,8 @@ export const UserUncheckedCreateWithoutSessionsInputSchema: z.ZodType<Prisma.Use
   image: z.string().optional().nullable(),
   accounts: z.lazy(() => AccountUncheckedCreateNestedManyWithoutUserInputSchema).optional(),
   studiosCreated: z.lazy(() => StudioUncheckedCreateNestedManyWithoutCreatorInputSchema).optional(),
-  studiosJoined: z.lazy(() => StudioUncheckedCreateNestedManyWithoutMembersInputSchema).optional()
+  studiosJoined: z.lazy(() => StudioUncheckedCreateNestedManyWithoutMembersInputSchema).optional(),
+  Booking: z.lazy(() => BookingUncheckedCreateNestedManyWithoutOwnerInputSchema).optional()
 }).strict();
 
 export default UserUncheckedCreateWithoutSessionsInputSchema;

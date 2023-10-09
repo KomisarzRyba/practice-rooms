@@ -8,6 +8,8 @@ import { UserRelationFilterSchema } from './UserRelationFilterSchema';
 import { UserWhereInputSchema } from './UserWhereInputSchema';
 import { UserListRelationFilterSchema } from './UserListRelationFilterSchema';
 import { RoomListRelationFilterSchema } from './RoomListRelationFilterSchema';
+import { SchedulePropertiesNullableRelationFilterSchema } from './SchedulePropertiesNullableRelationFilterSchema';
+import { SchedulePropertiesWhereInputSchema } from './SchedulePropertiesWhereInputSchema';
 
 export const StudioWhereUniqueInputSchema: z.ZodType<Prisma.StudioWhereUniqueInput> = z.union([
   z.object({
@@ -32,7 +34,8 @@ export const StudioWhereUniqueInputSchema: z.ZodType<Prisma.StudioWhereUniqueInp
   invitedUserEmails: z.lazy(() => StringNullableListFilterSchema).optional(),
   creator: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
   members: z.lazy(() => UserListRelationFilterSchema).optional(),
-  rooms: z.lazy(() => RoomListRelationFilterSchema).optional()
+  rooms: z.lazy(() => RoomListRelationFilterSchema).optional(),
+  scheduleProperties: z.union([ z.lazy(() => SchedulePropertiesNullableRelationFilterSchema),z.lazy(() => SchedulePropertiesWhereInputSchema) ]).optional().nullable(),
 }).strict());
 
 export default StudioWhereUniqueInputSchema;

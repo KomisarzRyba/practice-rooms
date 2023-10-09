@@ -4,7 +4,7 @@ import MenuSection from '@/components/MenuSection';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { useUpdateGeneralSettings } from '@/lib/mutations/hooks/mutation';
+import { useUpdateStudioSettings } from '@/lib/mutations/hooks/mutation';
 import {
 	StudioGeneralSettings,
 	studioGeneralSettings,
@@ -31,7 +31,7 @@ const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
 			description: studio.description || '',
 		},
 	});
-	const { mutate: save, isLoading } = useUpdateGeneralSettings(studio.id);
+	const { mutate: save, isLoading } = useUpdateStudioSettings(studio.id);
 
 	return (
 		<div className='flex flex-col gap-2'>

@@ -6,6 +6,7 @@ export const UserCountOutputTypeSelectSchema: z.ZodType<Prisma.UserCountOutputTy
   sessions: z.boolean().optional(),
   studiosCreated: z.boolean().optional(),
   studiosJoined: z.boolean().optional(),
+  Booking: z.boolean().optional(),
 }).strict();
 
 export default UserCountOutputTypeSelectSchema;

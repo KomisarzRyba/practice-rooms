@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { StudioSchema, UserSchema } from '../../../../prisma/generated/zod';
+import {
+	RoomSchema,
+	StudioSchema,
+	UserSchema,
+} from '../../../../prisma/generated/zod';
 import { object, array, string } from 'zod';
 
 const getAuthorizedApiClient = async () => {
@@ -66,6 +70,17 @@ export const getPendingStudios = async () => {
 	try {
 		const { data } = await client.get(`/studio/pending`);
 		return array(StudioSchema).parse(data);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export type GetStudioRoomsParams = GetStudioParams;
+export const getStudioRooms = async ({ studioId }: GetStudioParams) => {
+	const client = await getAuthorizedApiClient();
+	try {
+		const { data } = await client.get(`/studio/${studioId}/rooms`);
+		return array(RoomSchema).parse(data);
 	} catch (error) {
 		console.log(error);
 	}

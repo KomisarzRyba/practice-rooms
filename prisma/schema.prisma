@@ -48,6 +48,7 @@ model User {
   sessions       Session[]
   studiosCreated Studio[]  @relation("creator")
   studiosJoined  Studio[]  @relation("member")
+  Booking        Booking[]
 }
 
 model VerificationToken {
@@ -59,19 +60,40 @@ model VerificationToken {
 }
 
 model Studio {
-  id                String   @id @default(cuid())
-  name              String   @unique
-  description       String?
-  creatorId         String
-  creator           User     @relation("creator", fields: [creatorId], references: [id])
-  members           User[]   @relation("member")
-  rooms             Room[]   @relation("rooms_in_studio")
-  invitedUserEmails String[]
+  id                 String              @id @default(cuid())
+  name               String              @unique
+  description        String?
+  creatorId          String
+  creator            User                @relation("creator", fields: [creatorId], references: [id])
+  members            User[]              @relation("member")
+  rooms              Room[]              @relation("rooms_in_studio")
+  invitedUserEmails  String[]
+  scheduleProperties ScheduleProperties?
 }
 
 model Room {
-  id       String @id @default(cuid())
-  name     String @unique
-  studio   Studio @relation("rooms_in_studio", fields: [studioId], references: [id])
+  id       String    @id @default(cuid())
+  name     String    @unique
+  studio   Studio    @relation("rooms_in_studio", fields: [studioId], references: [id])
   studioId String
+  Booking  Booking[]
+}
+
+model ScheduleProperties {
+  studio   Studio   @relation(fields: [studioId], references: [id])
+  studioId String   @unique
+  dayStart DateTime
+  dayEnd   DateTime
+}
+
+model Booking {
+  id        Int      @id @default(autoincrement())
+  owner     User     @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  startTime DateTime
+  endTime   DateTime
 }

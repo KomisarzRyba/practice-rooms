@@ -35,9 +35,7 @@ const AddMembersForm: FC<AddMembersFormProps> = ({
 		<form
 			onSubmit={handleSubmit((data) => {
 				addMember(data, {
-					onSuccess: () => {
-						reset();
-					},
+					onSuccess: () => reset(),
 				});
 			})}
 			className={cn('flex flex-col gap-2', className)}

@@ -1,11 +1,12 @@
-import { Studio } from '@prisma/client';
-import { FC } from 'react';
-import MenuSection from '../MenuSection';
 import {
 	useGetInvitedUserEmails,
 	useGetMembersWithCreator,
 } from '@/lib/queries/hooks/query';
+import { Studio } from '@prisma/client';
+import { FC } from 'react';
+import AddMembersForm from '../AddMembersForm';
 import MemberCard from '../MemberCard';
+import MenuSection from '../MenuSection';
 import { Button } from '../ui/button';
 import {
 	Dialog,
@@ -15,9 +16,6 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '../ui/dialog';
-import AddMembersForm from '../AddMembersForm';
-import { useRemoveFromStudio } from '@/lib/mutations/hooks/mutation';
-import { LoadingButton } from '../ui/loading-button';
 import RemoveUserButton from './RemoveUserButton';
 
 interface StudioMembersSettingsProps {

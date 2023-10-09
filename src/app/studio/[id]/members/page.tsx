@@ -1,16 +1,8 @@
 'use client';
 
 import MemberCard from '@/components/MemberCard';
-import MenuSection from '@/components/MenuSection';
-import StudioGeneralSettings from '@/components/settings/StudioGeneralSettings';
 import { buttonVariants } from '@/components/ui/button';
-import {
-	Card,
-	CardHeader,
-	CardTitle,
-	CardDescription,
-	CardContent,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
 	useGetMembersWithCreator,
@@ -20,13 +12,13 @@ import { GearIcon, PersonIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { FC } from 'react';
 
-interface ManageMembersPageProps {
+interface MembersPageProps {
 	params: {
 		id: string;
 	};
 }
 
-const ManageMembersPage: FC<ManageMembersPageProps> = ({ params }) => {
+const MembersPage: FC<MembersPageProps> = ({ params }) => {
 	const { id } = params;
 	const { data: studio } = useGetStudio({ studioId: id });
 	const { data: membersWithCreator } = useGetMembersWithCreator({
@@ -65,7 +57,9 @@ const ManageMembersPage: FC<ManageMembersPageProps> = ({ params }) => {
 								return (
 									<MemberCard
 										key={i}
-										{...member}
+										id={member.id}
+										name={member.name}
+										image={member.image}
 										isCreator={
 											member.id ===
 											membersWithCreator.creator.id
@@ -84,4 +78,4 @@ const ManageMembersPage: FC<ManageMembersPageProps> = ({ params }) => {
 	);
 };
 
-export default ManageMembersPage;
+export default MembersPage;

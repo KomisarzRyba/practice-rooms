@@ -6,6 +6,7 @@ import { DateTimeNullableFilterSchema } from './DateTimeNullableFilterSchema';
 import { AccountListRelationFilterSchema } from './AccountListRelationFilterSchema';
 import { SessionListRelationFilterSchema } from './SessionListRelationFilterSchema';
 import { StudioListRelationFilterSchema } from './StudioListRelationFilterSchema';
+import { BookingListRelationFilterSchema } from './BookingListRelationFilterSchema';
 
 export const UserWhereUniqueInputSchema: z.ZodType<Prisma.UserWhereUniqueInput> = z.union([
   z.object({
@@ -31,7 +32,8 @@ export const UserWhereUniqueInputSchema: z.ZodType<Prisma.UserWhereUniqueInput> 
   accounts: z.lazy(() => AccountListRelationFilterSchema).optional(),
   sessions: z.lazy(() => SessionListRelationFilterSchema).optional(),
   studiosCreated: z.lazy(() => StudioListRelationFilterSchema).optional(),
-  studiosJoined: z.lazy(() => StudioListRelationFilterSchema).optional()
+  studiosJoined: z.lazy(() => StudioListRelationFilterSchema).optional(),
+  Booking: z.lazy(() => BookingListRelationFilterSchema).optional()
 }).strict());
 
 export default UserWhereUniqueInputSchema;

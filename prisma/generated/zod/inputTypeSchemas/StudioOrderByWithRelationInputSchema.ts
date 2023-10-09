@@ -5,6 +5,7 @@ import { SortOrderInputSchema } from './SortOrderInputSchema';
 import { UserOrderByWithRelationInputSchema } from './UserOrderByWithRelationInputSchema';
 import { UserOrderByRelationAggregateInputSchema } from './UserOrderByRelationAggregateInputSchema';
 import { RoomOrderByRelationAggregateInputSchema } from './RoomOrderByRelationAggregateInputSchema';
+import { SchedulePropertiesOrderByWithRelationInputSchema } from './SchedulePropertiesOrderByWithRelationInputSchema';
 
 export const StudioOrderByWithRelationInputSchema: z.ZodType<Prisma.StudioOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
@@ -14,7 +15,8 @@ export const StudioOrderByWithRelationInputSchema: z.ZodType<Prisma.StudioOrderB
   invitedUserEmails: z.lazy(() => SortOrderSchema).optional(),
   creator: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
   members: z.lazy(() => UserOrderByRelationAggregateInputSchema).optional(),
-  rooms: z.lazy(() => RoomOrderByRelationAggregateInputSchema).optional()
+  rooms: z.lazy(() => RoomOrderByRelationAggregateInputSchema).optional(),
+  scheduleProperties: z.lazy(() => SchedulePropertiesOrderByWithRelationInputSchema).optional()
 }).strict();
 
 export default StudioOrderByWithRelationInputSchema;

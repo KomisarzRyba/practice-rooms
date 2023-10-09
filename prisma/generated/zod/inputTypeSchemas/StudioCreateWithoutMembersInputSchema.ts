@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { StudioCreateinvitedUserEmailsInputSchema } from './StudioCreateinvitedUserEmailsInputSchema';
 import { UserCreateNestedOneWithoutStudiosCreatedInputSchema } from './UserCreateNestedOneWithoutStudiosCreatedInputSchema';
 import { RoomCreateNestedManyWithoutStudioInputSchema } from './RoomCreateNestedManyWithoutStudioInputSchema';
+import { SchedulePropertiesCreateNestedOneWithoutStudioInputSchema } from './SchedulePropertiesCreateNestedOneWithoutStudioInputSchema';
 
 export const StudioCreateWithoutMembersInputSchema: z.ZodType<Prisma.StudioCreateWithoutMembersInput> = z.object({
   id: z.string().cuid().optional(),
@@ -10,7 +11,8 @@ export const StudioCreateWithoutMembersInputSchema: z.ZodType<Prisma.StudioCreat
   description: z.string().optional().nullable(),
   invitedUserEmails: z.union([ z.lazy(() => StudioCreateinvitedUserEmailsInputSchema),z.string().array() ]).optional(),
   creator: z.lazy(() => UserCreateNestedOneWithoutStudiosCreatedInputSchema),
-  rooms: z.lazy(() => RoomCreateNestedManyWithoutStudioInputSchema).optional()
+  rooms: z.lazy(() => RoomCreateNestedManyWithoutStudioInputSchema).optional(),
+  scheduleProperties: z.lazy(() => SchedulePropertiesCreateNestedOneWithoutStudioInputSchema).optional()
 }).strict();
 
 export default StudioCreateWithoutMembersInputSchema;

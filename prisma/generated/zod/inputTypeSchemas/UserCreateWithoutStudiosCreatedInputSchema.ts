@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { AccountCreateNestedManyWithoutUserInputSchema } from './AccountCreateNestedManyWithoutUserInputSchema';
 import { SessionCreateNestedManyWithoutUserInputSchema } from './SessionCreateNestedManyWithoutUserInputSchema';
 import { StudioCreateNestedManyWithoutMembersInputSchema } from './StudioCreateNestedManyWithoutMembersInputSchema';
+import { BookingCreateNestedManyWithoutOwnerInputSchema } from './BookingCreateNestedManyWithoutOwnerInputSchema';
 
 export const UserCreateWithoutStudiosCreatedInputSchema: z.ZodType<Prisma.UserCreateWithoutStudiosCreatedInput> = z.object({
   id: z.string().cuid().optional(),
@@ -12,7 +13,8 @@ export const UserCreateWithoutStudiosCreatedInputSchema: z.ZodType<Prisma.UserCr
   image: z.string().optional().nullable(),
   accounts: z.lazy(() => AccountCreateNestedManyWithoutUserInputSchema).optional(),
   sessions: z.lazy(() => SessionCreateNestedManyWithoutUserInputSchema).optional(),
-  studiosJoined: z.lazy(() => StudioCreateNestedManyWithoutMembersInputSchema).optional()
+  studiosJoined: z.lazy(() => StudioCreateNestedManyWithoutMembersInputSchema).optional(),
+  Booking: z.lazy(() => BookingCreateNestedManyWithoutOwnerInputSchema).optional()
 }).strict();
 
 export default UserCreateWithoutStudiosCreatedInputSchema;

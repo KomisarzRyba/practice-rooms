@@ -5,9 +5,12 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
 	addOrInviteMember,
+	createRoom,
+	createStudio,
+	deleteRoom,
 	joinStudio,
 	removeFromStudio,
-	updateGeneralSettings,
+	updateStudioSettings,
 } from '../client/mutation';
 
 const handleError = (error: unknown) => {
@@ -22,9 +25,23 @@ const handleError = (error: unknown) => {
 	});
 };
 
-export const useUpdateGeneralSettings = (studioId: string) => {
+export const useCreateStudio = () => {
+	const router = useRouter();
+	return useMutation(['create_studio'], createStudio, {
+		onError: handleError,
+		onSuccess: (createdStudio) => {
+			router.push(`/studio/${createdStudio.id}`);
+			return toast({
+				title: 'Success!',
+				description: `${createdStudio.name} has been created!`,
+			});
+		},
+	});
+};
+
+export const useUpdateStudioSettings = (studioId: string) => {
 	const client = useQueryClient();
-	return useMutation(['settings', studioId], updateGeneralSettings, {
+	return useMutation(['settings', studioId], updateStudioSettings, {
 		onError: handleError,
 		onSuccess: (updatedStudio) => {
 			client.invalidateQueries(['studio', studioId]);
@@ -87,6 +104,34 @@ export const useRemoveFromStudio = (studioId: string) => {
 			return toast({
 				title: 'Bye bye, loser!',
 				description: `${removedUser.name} has been removed from ${removedUser.studioName}.`,
+			});
+		},
+	});
+};
+
+export const useCreateRoom = () => {
+	const client = useQueryClient();
+	return useMutation(['create_room'], createRoom, {
+		onError: handleError,
+		onSuccess: (createdRoom) => {
+			client.invalidateQueries(['rooms', createdRoom.studioId]);
+			return toast({
+				title: 'Yay!',
+				description: `${createdRoom.name} has been created.`,
+			});
+		},
+	});
+};
+
+export const useDeleteRoom = (roomId: string) => {
+	const client = useQueryClient();
+	return useMutation(['delete', roomId], deleteRoom, {
+		onError: handleError,
+		onSuccess: (deletedRoom) => {
+			client.invalidateQueries(['rooms', deletedRoom.studioId]);
+			return toast({
+				title: 'Gone!',
+				description: `${deletedRoom.name} has been buldozed.`,
 			});
 		},
 	});

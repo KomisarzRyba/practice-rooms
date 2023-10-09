@@ -1,9 +1,14 @@
 import { NewMember } from '@/lib/validators/member';
 import axios from 'axios';
 import { string } from 'zod';
-import { StudioSchema, UserSchema } from '../../../../prisma/generated/zod';
-import { Prisma } from '@prisma/client';
-import { StudioGeneralSettings } from '@/lib/validators/studio';
+import {
+	RoomSchema,
+	StudioSchema,
+	UserSchema,
+} from '../../../../prisma/generated/zod';
+import { Prisma, Room } from '@prisma/client';
+import { NewStudio, StudioGeneralSettings } from '@/lib/validators/studio';
+import { NewRoom } from '@/lib/validators/room';
 
 const getAuthorizedApiClient = async () => {
 	let headers: Record<string, string> = {};
@@ -14,7 +19,14 @@ const getAuthorizedApiClient = async () => {
 	return client;
 };
 
-export const updateGeneralSettings = async ({
+export const createStudio = async (newStudio: NewStudio) => {
+	const client = await getAuthorizedApiClient();
+	const { data } = await client.post('/studio', newStudio);
+	const createdStudio = StudioSchema.parse(data);
+	return createdStudio;
+};
+
+export const updateStudioSettings = async ({
 	studioId,
 	...settings
 }: StudioGeneralSettings) => {
@@ -54,4 +66,19 @@ export const removeFromStudio = async ({
 	const { data } = await client.patch(`/studio/${studioId}/join`, userId);
 	const removedUser = UserSchema.extend({ studioName: string() }).parse(data);
 	return removedUser;
+};
+
+export const createRoom = async (newRoom: NewRoom) => {
+	const client = await getAuthorizedApiClient();
+	const { data } = await client.post(`/room`, newRoom);
+	const createdRoom = RoomSchema.parse(data);
+	return createdRoom;
+};
+
+export type DeleteRoomParams = Pick<Room, 'id'>;
+export const deleteRoom = async ({ id }: DeleteRoomParams) => {
+	const client = await getAuthorizedApiClient();
+	const { data } = await client.delete(`/room/${id}`);
+	const deletedRoom = RoomSchema.parse(data);
+	return deletedRoom;
 };

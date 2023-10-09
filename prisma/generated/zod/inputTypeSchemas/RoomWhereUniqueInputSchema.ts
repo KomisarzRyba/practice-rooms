@@ -4,6 +4,7 @@ import { RoomWhereInputSchema } from './RoomWhereInputSchema';
 import { StringFilterSchema } from './StringFilterSchema';
 import { StudioRelationFilterSchema } from './StudioRelationFilterSchema';
 import { StudioWhereInputSchema } from './StudioWhereInputSchema';
+import { BookingListRelationFilterSchema } from './BookingListRelationFilterSchema';
 
 export const RoomWhereUniqueInputSchema: z.ZodType<Prisma.RoomWhereUniqueInput> = z.union([
   z.object({
@@ -25,6 +26,7 @@ export const RoomWhereUniqueInputSchema: z.ZodType<Prisma.RoomWhereUniqueInput> 
   NOT: z.union([ z.lazy(() => RoomWhereInputSchema),z.lazy(() => RoomWhereInputSchema).array() ]).optional(),
   studioId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   studio: z.union([ z.lazy(() => StudioRelationFilterSchema),z.lazy(() => StudioWhereInputSchema) ]).optional(),
+  Booking: z.lazy(() => BookingListRelationFilterSchema).optional()
 }).strict());
 
 export default RoomWhereUniqueInputSchema;

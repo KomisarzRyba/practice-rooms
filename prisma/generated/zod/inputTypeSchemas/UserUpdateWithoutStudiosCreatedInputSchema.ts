@@ -6,6 +6,7 @@ import { NullableDateTimeFieldUpdateOperationsInputSchema } from './NullableDate
 import { AccountUpdateManyWithoutUserNestedInputSchema } from './AccountUpdateManyWithoutUserNestedInputSchema';
 import { SessionUpdateManyWithoutUserNestedInputSchema } from './SessionUpdateManyWithoutUserNestedInputSchema';
 import { StudioUpdateManyWithoutMembersNestedInputSchema } from './StudioUpdateManyWithoutMembersNestedInputSchema';
+import { BookingUpdateManyWithoutOwnerNestedInputSchema } from './BookingUpdateManyWithoutOwnerNestedInputSchema';
 
 export const UserUpdateWithoutStudiosCreatedInputSchema: z.ZodType<Prisma.UserUpdateWithoutStudiosCreatedInput> = z.object({
   id: z.union([ z.string().cuid(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
@@ -15,7 +16,8 @@ export const UserUpdateWithoutStudiosCreatedInputSchema: z.ZodType<Prisma.UserUp
   image: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   accounts: z.lazy(() => AccountUpdateManyWithoutUserNestedInputSchema).optional(),
   sessions: z.lazy(() => SessionUpdateManyWithoutUserNestedInputSchema).optional(),
-  studiosJoined: z.lazy(() => StudioUpdateManyWithoutMembersNestedInputSchema).optional()
+  studiosJoined: z.lazy(() => StudioUpdateManyWithoutMembersNestedInputSchema).optional(),
+  Booking: z.lazy(() => BookingUpdateManyWithoutOwnerNestedInputSchema).optional()
 }).strict();
 
 export default UserUpdateWithoutStudiosCreatedInputSchema;
