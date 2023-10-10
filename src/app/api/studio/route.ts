@@ -78,7 +78,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 				},
 			},
 		});
-		return new NextResponse(createdStudio.id, { status: 201 });
+		return NextResponse.json(createdStudio, { status: 201 });
 	} catch (error) {
 		console.log(error);
 		if (error instanceof ZodError) {

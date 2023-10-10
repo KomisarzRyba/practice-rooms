@@ -150,7 +150,7 @@ export const useUpdateStudioScheduleSettings = (studioId: string) => {
 		{
 			onError: handleError,
 			onSuccess: () => {
-				client.invalidateQueries(['schedule', studioId]);
+				client.invalidateQueries(['schedule_properties', studioId]);
 				return toast({
 					title: 'Done!',
 					description: 'The Schedule has been updated.',

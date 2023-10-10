@@ -44,7 +44,7 @@ const StudioDisplaySettings: FC<StudioDisplaySettingsProps> = ({ studio }) => {
 					)}
 					className='flex flex-col gap-4'
 				>
-					<div>
+					<fieldset>
 						<Label htmlFor='name'>
 							{errors.name?.message || 'Studio Name'}
 						</Label>
@@ -53,8 +53,8 @@ const StudioDisplaySettings: FC<StudioDisplaySettingsProps> = ({ studio }) => {
 							{...register('name')}
 							className='bg-card'
 						/>
-					</div>
-					<div>
+					</fieldset>
+					<fieldset>
 						<Label htmlFor='description'>
 							{errors.description?.message ||
 								'Studio Description'}
@@ -64,7 +64,7 @@ const StudioDisplaySettings: FC<StudioDisplaySettingsProps> = ({ studio }) => {
 							{...register('description')}
 							className='bg-card'
 						/>
-					</div>
+					</fieldset>
 					<LoadingButton
 						isLoading={isLoading}
 						className='place-self-end'

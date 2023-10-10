@@ -12,6 +12,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Studio } from '@prisma/client';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { TimeRangePicker } from '../TimeRangePicker';
+import { format } from 'date-fns';
 import { Label } from '../ui/label';
 
 interface StudioDisplaySettingsProps {
@@ -19,20 +21,12 @@ interface StudioDisplaySettingsProps {
 }
 
 const StudioScheduleSettings: FC<StudioDisplaySettingsProps> = ({ studio }) => {
-	const { data: scheduleProps } = useGetScheduleProperties({
-		studioId: studio.id,
-	});
-
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<StudioScheduleProperties>({
 		resolver: zodResolver(studioScheduleProperties),
-		defaultValues: {
-			dayStart: scheduleProps?.dayStart,
-			dayEnd: scheduleProps?.dayEnd,
-		},
 	});
 	const { mutate: update, isLoading } = useUpdateStudioScheduleSettings(
 		studio.id
@@ -43,11 +37,23 @@ const StudioScheduleSettings: FC<StudioDisplaySettingsProps> = ({ studio }) => {
 			<MenuSection>
 				<h2>Schedule</h2>
 				<form
-					onSubmit={handleSubmit((data) =>
-						update({ ...data, studioId: studio.id })
-					)}
+					onSubmit={handleSubmit((data) => {
+						update({ ...data, studioId: studio.id });
+					})}
 					className='flex flex-col gap-4'
 				>
+					<fieldset>
+						<Label>
+							{errors.dayEnd?.message ||
+								errors.dayStart?.message ||
+								"General studio's availability range"}
+						</Label>
+						<TimeRangePicker
+							studio={studio}
+							startFieldProps={{ ...register('dayStart') }}
+							endFieldProps={{ ...register('dayEnd') }}
+						/>
+					</fieldset>
 					<LoadingButton
 						isLoading={isLoading}
 						className='place-self-end'

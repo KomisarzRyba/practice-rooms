@@ -13,13 +13,7 @@ export const studioDisplaySettings = newStudio;
 export type StudioDisplaySettings = z.infer<typeof studioDisplaySettings>;
 
 export const studioScheduleProperties = z.object({
-	dayStart: z
-		.date()
-		.min(new Date(0, 0, 0, 0, 0))
-		.max(new Date(0, 0, 0, 23, 59)),
-	dayEnd: z
-		.date()
-		.min(new Date(0, 0, 0, 0, 0))
-		.max(new Date(0, 0, 0, 23, 59)),
+	dayStart: z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/),
+	dayEnd: z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/),
 });
 export type StudioScheduleProperties = z.infer<typeof studioScheduleProperties>;

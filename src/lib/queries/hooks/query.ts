@@ -53,7 +53,7 @@ export const useGetRoomBookings = ({ roomId }: GetRoomBookingsParams) => {
 export const useGetScheduleProperties = ({
 	studioId,
 }: GetSchedulePropertiesParams) => {
-	return useQuery(['schedule_settings', studioId], () =>
+	return useQuery(['schedule_properties', studioId], () =>
 		getScheduleProperties({ studioId })
 	);
 };

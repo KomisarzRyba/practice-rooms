@@ -92,9 +92,13 @@ export const updateStudioScheduleSettings = async ({
 	...settings
 }: UpdateStudioScheduleSettingsParams) => {
 	const client = await getAuthorizedApiClient();
+	const settingsWithDates: { [Property in keyof typeof settings]: Date } = {
+		dayStart: new Date(`1970-01-01T${settings.dayStart}`),
+		dayEnd: new Date(`1970-01-01T${settings.dayEnd}`),
+	};
 	const prismaInput: Prisma.SchedulePropertiesUpdateArgs = {
 		where: { studioId },
-		data: settings,
+		data: settingsWithDates,
 	};
 	const { data } = await client.put(
 		`/studio/${studioId}/schedule-props`,
