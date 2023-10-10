@@ -4,41 +4,44 @@ import MenuSection from '@/components/MenuSection';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LoadingButton } from '@/components/ui/loading-button';
-import { useUpdateStudioSettings } from '@/lib/mutations/hooks/mutation';
+import { useUpdateStudioDisplaySettings } from '@/lib/mutations/hooks/mutation';
 import {
-	StudioGeneralSettings,
-	studioGeneralSettings,
+	studioDisplaySettings,
+	type StudioDisplaySettings as StudioDisplaySettingsType,
 } from '@/lib/validators/studio';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Studio } from '@prisma/client';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
-interface StudioGeneralSettingsProps {
+interface StudioDisplaySettingsProps {
 	studio: Studio;
 }
 
-const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
+const StudioDisplaySettings: FC<StudioDisplaySettingsProps> = ({ studio }) => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<StudioGeneralSettings>({
-		resolver: zodResolver(studioGeneralSettings),
+	} = useForm<StudioDisplaySettingsType>({
+		resolver: zodResolver(studioDisplaySettings),
 		defaultValues: {
-			studioId: studio.id,
 			name: studio.name,
 			description: studio.description || '',
 		},
 	});
-	const { mutate: save, isLoading } = useUpdateStudioSettings(studio.id);
+	const { mutate: save, isLoading } = useUpdateStudioDisplaySettings(
+		studio.id
+	);
 
 	return (
 		<div className='flex flex-col gap-2'>
 			<MenuSection>
 				<h2>Display</h2>
 				<form
-					onSubmit={handleSubmit((data) => save(data))}
+					onSubmit={handleSubmit((data) =>
+						save({ ...data, studioId: studio.id })
+					)}
 					className='flex flex-col gap-4'
 				>
 					<div>
@@ -74,4 +77,4 @@ const StudioGeneralSettings: FC<StudioGeneralSettingsProps> = ({ studio }) => {
 	);
 };
 
-export default StudioGeneralSettings;
+export default StudioDisplaySettings;

@@ -10,7 +10,8 @@ import {
 	deleteRoom,
 	joinStudio,
 	removeFromStudio,
-	updateStudioSettings,
+	updateStudioDisplaySettings,
+	updateStudioScheduleSettings,
 } from '../client/mutation';
 
 const handleError = (error: unknown) => {
@@ -39,18 +40,22 @@ export const useCreateStudio = () => {
 	});
 };
 
-export const useUpdateStudioSettings = (studioId: string) => {
+export const useUpdateStudioDisplaySettings = (studioId: string) => {
 	const client = useQueryClient();
-	return useMutation(['settings', studioId], updateStudioSettings, {
-		onError: handleError,
-		onSuccess: (updatedStudio) => {
-			client.invalidateQueries(['studio', studioId]);
-			return toast({
-				title: 'Success!',
-				description: updatedStudio.name + ' has been updated!',
-			});
-		},
-	});
+	return useMutation(
+		['display_settings', studioId],
+		updateStudioDisplaySettings,
+		{
+			onError: handleError,
+			onSuccess: (updatedStudio) => {
+				client.invalidateQueries(['studio', studioId]);
+				return toast({
+					title: 'Success!',
+					description: updatedStudio.name + ' has been updated!',
+				});
+			},
+		}
+	);
 };
 
 export const useAddOrInviteMember = (studioId: string) => {
@@ -135,4 +140,22 @@ export const useDeleteRoom = (roomId: string) => {
 			});
 		},
 	});
+};
+
+export const useUpdateStudioScheduleSettings = (studioId: string) => {
+	const client = useQueryClient();
+	return useMutation(
+		['schedule_settings', studioId],
+		updateStudioScheduleSettings,
+		{
+			onError: handleError,
+			onSuccess: () => {
+				client.invalidateQueries(['schedule', studioId]);
+				return toast({
+					title: 'Done!',
+					description: 'The Schedule has been updated.',
+				});
+			},
+		}
+	);
 };

@@ -1,15 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import {
+	GetRoomBookingsParams,
 	GetInvitedUserEmailsParams,
 	GetMembersParams,
 	GetStudioParams,
 	GetStudioRoomsParams,
+	getRoomBookings,
 	getInvitedUserEmails,
 	getJoinedStudios,
 	getMembersWithCreator,
 	getPendingStudios,
 	getStudio,
 	getStudioRooms,
+	GetSchedulePropertiesParams,
+	getScheduleProperties,
 } from '../client/query';
 
 export const useGetStudio = ({ studioId }: GetStudioParams) => {
@@ -40,4 +44,16 @@ export const useGetPendingStudios = () => {
 
 export const useGetStudioRooms = ({ studioId }: GetStudioRoomsParams) => {
 	return useQuery(['rooms', studioId], () => getStudioRooms({ studioId }));
+};
+
+export const useGetRoomBookings = ({ roomId }: GetRoomBookingsParams) => {
+	return useQuery(['bookings', roomId], () => getRoomBookings({ roomId }));
+};
+
+export const useGetScheduleProperties = ({
+	studioId,
+}: GetSchedulePropertiesParams) => {
+	return useQuery(['schedule_settings', studioId], () =>
+		getScheduleProperties({ studioId })
+	);
 };

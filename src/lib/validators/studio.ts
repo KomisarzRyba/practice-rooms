@@ -9,7 +9,17 @@ export const newStudio = z.object({
 });
 export type NewStudio = z.infer<typeof newStudio>;
 
-export const studioGeneralSettings = newStudio.extend({
-	studioId: z.string(),
+export const studioDisplaySettings = newStudio;
+export type StudioDisplaySettings = z.infer<typeof studioDisplaySettings>;
+
+export const studioScheduleProperties = z.object({
+	dayStart: z
+		.date()
+		.min(new Date(0, 0, 0, 0, 0))
+		.max(new Date(0, 0, 0, 23, 59)),
+	dayEnd: z
+		.date()
+		.min(new Date(0, 0, 0, 0, 0))
+		.max(new Date(0, 0, 0, 23, 59)),
 });
-export type StudioGeneralSettings = z.infer<typeof studioGeneralSettings>;
+export type StudioScheduleProperties = z.infer<typeof studioScheduleProperties>;

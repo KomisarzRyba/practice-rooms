@@ -1,6 +1,7 @@
 'use client';
 
-import StudioGeneralSettings from '@/components/settings/StudioGeneralSettings';
+import StudioDisplaySettings from '@/components/settings/StudioDisplaySettings';
+import StudioScheduleSettings from '@/components/settings/StudioScheduleSettings';
 import {
 	Card,
 	CardContent,
@@ -39,9 +40,12 @@ const StudioSettingsPage: FC<StudioSettingsPageProps> = ({ params }) => {
 					</CardTitle>
 					<CardDescription>General</CardDescription>
 				</CardHeader>
-				<CardContent>
+				<CardContent className='flex flex-col gap-4'>
 					{studio ? (
-						<StudioGeneralSettings studio={studio} />
+						<>
+							<StudioDisplaySettings studio={studio} />
+							<StudioScheduleSettings studio={studio} />
+						</>
 					) : (
 						<Skeleton className='w-full h-48' />
 					)}

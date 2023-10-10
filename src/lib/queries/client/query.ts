@@ -1,10 +1,12 @@
 import axios from 'axios';
+import { array, object, string } from 'zod';
 import {
+	BookingSchema,
 	RoomSchema,
+	SchedulePropertiesSchema,
 	StudioSchema,
 	UserSchema,
 } from '../../../../prisma/generated/zod';
-import { object, array, string } from 'zod';
 
 const getAuthorizedApiClient = async () => {
 	let headers: Record<string, string> = {};
@@ -81,6 +83,32 @@ export const getStudioRooms = async ({ studioId }: GetStudioParams) => {
 	try {
 		const { data } = await client.get(`/studio/${studioId}/rooms`);
 		return array(RoomSchema).parse(data);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export type GetRoomBookingsParams = {
+	roomId: string;
+};
+export const getRoomBookings = async ({ roomId }: GetRoomBookingsParams) => {
+	const client = await getAuthorizedApiClient();
+	try {
+		const { data } = await client.get(`/room/${roomId}/bookings`);
+		return array(BookingSchema).parse(data);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+export type GetSchedulePropertiesParams = GetStudioParams;
+export const getScheduleProperties = async ({
+	studioId,
+}: GetSchedulePropertiesParams) => {
+	const client = await getAuthorizedApiClient();
+	try {
+		const { data } = await client.get(`/studio/${studioId}/schedule-props`);
+		return SchedulePropertiesSchema.parse(data);
 	} catch (error) {
 		console.log(error);
 	}

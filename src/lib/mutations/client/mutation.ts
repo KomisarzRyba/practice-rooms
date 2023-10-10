@@ -1,14 +1,19 @@
 import { NewMember } from '@/lib/validators/member';
+import { NewRoom } from '@/lib/validators/room';
+import {
+	NewStudio,
+	StudioDisplaySettings,
+	StudioScheduleProperties,
+} from '@/lib/validators/studio';
+import { Prisma, Room } from '@prisma/client';
 import axios from 'axios';
 import { string } from 'zod';
 import {
 	RoomSchema,
+	SchedulePropertiesSchema,
 	StudioSchema,
 	UserSchema,
 } from '../../../../prisma/generated/zod';
-import { Prisma, Room } from '@prisma/client';
-import { NewStudio, StudioGeneralSettings } from '@/lib/validators/studio';
-import { NewRoom } from '@/lib/validators/room';
 
 const getAuthorizedApiClient = async () => {
 	let headers: Record<string, string> = {};
@@ -22,36 +27,35 @@ const getAuthorizedApiClient = async () => {
 export const createStudio = async (newStudio: NewStudio) => {
 	const client = await getAuthorizedApiClient();
 	const { data } = await client.post('/studio', newStudio);
-	const createdStudio = StudioSchema.parse(data);
-	return createdStudio;
+	return StudioSchema.parse(data);
 };
 
-export const updateStudioSettings = async ({
+type UpdateStudioDisplaySettingsParams = StudioDisplaySettings & {
+	studioId: string;
+};
+export const updateStudioDisplaySettings = async ({
 	studioId,
 	...settings
-}: StudioGeneralSettings) => {
+}: UpdateStudioDisplaySettingsParams) => {
 	const client = await getAuthorizedApiClient();
 	const prismaInput: Prisma.StudioUpdateArgs = {
 		where: { id: studioId },
 		data: { ...settings },
 	};
 	const { data } = await client.patch(`/studio/${studioId}`, prismaInput);
-	const updatedStudio = StudioSchema.parse(data);
-	return updatedStudio;
+	return StudioSchema.parse(data);
 };
 
 export const addOrInviteMember = async ({ studioId, email }: NewMember) => {
 	const client = await getAuthorizedApiClient();
 	const { data } = await client.post(`/studio/${studioId}/members`, email);
-	const addedNameOrEmail = string().parse(data);
-	return addedNameOrEmail;
+	return string().parse(data);
 };
 
 export const joinStudio = async (studioId: string) => {
 	const client = await getAuthorizedApiClient();
 	const { data } = await client.post(`/studio/${studioId}/join`);
-	const joinedStudio = StudioSchema.parse(data);
-	return joinedStudio;
+	return StudioSchema.parse(data);
 };
 
 export type RemoveFromStudioParams = {
@@ -64,21 +68,37 @@ export const removeFromStudio = async ({
 }: RemoveFromStudioParams) => {
 	const client = await getAuthorizedApiClient();
 	const { data } = await client.patch(`/studio/${studioId}/join`, userId);
-	const removedUser = UserSchema.extend({ studioName: string() }).parse(data);
-	return removedUser;
+	return UserSchema.extend({ studioName: string() }).parse(data);
 };
 
 export const createRoom = async (newRoom: NewRoom) => {
 	const client = await getAuthorizedApiClient();
 	const { data } = await client.post(`/room`, newRoom);
-	const createdRoom = RoomSchema.parse(data);
-	return createdRoom;
+	return RoomSchema.parse(data);
 };
 
 export type DeleteRoomParams = Pick<Room, 'id'>;
 export const deleteRoom = async ({ id }: DeleteRoomParams) => {
 	const client = await getAuthorizedApiClient();
 	const { data } = await client.delete(`/room/${id}`);
-	const deletedRoom = RoomSchema.parse(data);
-	return deletedRoom;
+	return RoomSchema.parse(data);
+};
+
+type UpdateStudioScheduleSettingsParams = StudioScheduleProperties & {
+	studioId: string;
+};
+export const updateStudioScheduleSettings = async ({
+	studioId,
+	...settings
+}: UpdateStudioScheduleSettingsParams) => {
+	const client = await getAuthorizedApiClient();
+	const prismaInput: Prisma.SchedulePropertiesUpdateArgs = {
+		where: { studioId },
+		data: settings,
+	};
+	const { data } = await client.put(
+		`/studio/${studioId}/schedule-props`,
+		prismaInput
+	);
+	return SchedulePropertiesSchema.parse(data);
 };

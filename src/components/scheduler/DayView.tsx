@@ -1,3 +1,9 @@
+import {
+	useGetRoomBookings,
+	useGetStudioRooms,
+} from '@/lib/queries/hooks/query';
+import { getHoursCount } from '@/lib/scheduler-utils';
+import { Room } from '@prisma/client';
 import { FC } from 'react';
 
 interface DayViewProps {
@@ -37,6 +43,8 @@ const day = [
 ];
 
 const DayView: FC<DayViewProps> = ({ studioId }) => {
+	// const {data: scheduleProps} = useGetScheduleProperties({studioId});
+	const { data: rooms } = useGetStudioRooms({ studioId });
 	return (
 		<div
 			// className={cn(
@@ -51,8 +59,8 @@ const DayView: FC<DayViewProps> = ({ studioId }) => {
 			className='flex flex-col'
 		>
 			<HeadRow />
-			{studio.rooms.map((room, i) => {
-				return <RoomRow key={i} />;
+			{rooms?.map((room, i) => {
+				return <RoomRow room={room} key={i} />;
 			})}
 		</div>
 	);
@@ -75,10 +83,16 @@ const HeadRow: FC = () => {
 	);
 };
 
-const RoomRow: FC = () => {
+interface RoomRowProps {
+	room: Room;
+}
+const RoomRow: FC<RoomRowProps> = ({ room }) => {
+	const { data: bookings, isLoading } = useGetRoomBookings({
+		roomId: room.id,
+	});
 	return (
 		<div className='flex'>
-			<div className='w-32 h-12 border border-r-2'>Room Name</div>
+			<div className='w-32 h-12 border border-r-2'>{room.name}</div>
 			{[...Array(getTimeSlotCount())].map((_, i) => {
 				return <div key={i} className='w-12 h-12 border'></div>;
 			})}

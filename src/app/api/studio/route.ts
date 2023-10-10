@@ -70,6 +70,12 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 						id: session.user.id,
 					},
 				},
+				scheduleProperties: {
+					create: {
+						dayStart: new Date(0, 0, 0, 6),
+						dayEnd: new Date(0, 0, 0, 22),
+					},
+				},
 			},
 		});
 		return new NextResponse(createdStudio.id, { status: 201 });
