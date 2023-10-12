@@ -25,10 +25,6 @@ export const TimeRangePicker: FC<TimeRangePickerProps> = ({
 	}
 	return (
 		<div className='flex items-center gap-2'>
-			<datalist id='endList'>
-				<option value='21:00' />
-				<option value='00:00' />
-			</datalist>
 			<TimePicker
 				options={['06:00', '08:00']}
 				defaultValue={format(scheduleProps?.dayStart, 'HH:mm')}
@@ -37,7 +33,7 @@ export const TimeRangePicker: FC<TimeRangePickerProps> = ({
 			/>
 			<span className='text-muted-foreground'>to</span>
 			<TimePicker
-				options={['21:00', '23:00']}
+				options={['21:00', '00:00']}
 				defaultValue={format(scheduleProps?.dayEnd, 'HH:mm')}
 				className='bg-card'
 				{...endFieldProps}

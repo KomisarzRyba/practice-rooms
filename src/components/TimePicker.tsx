@@ -9,13 +9,18 @@ const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
 		return (
 			<>
 				{options && (
-					<datalist id='list'>
+					<datalist id={options.toString()}>
 						{options.map((option) => (
 							<option key={option} value={option} />
 						))}
 					</datalist>
 				)}
-				<Input ref={ref} type='time' list='list' {...props} />
+				<Input
+					ref={ref}
+					type='time'
+					list={options?.toString()}
+					{...props}
+				/>
 			</>
 		);
 	}
