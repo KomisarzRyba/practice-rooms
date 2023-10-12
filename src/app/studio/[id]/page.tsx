@@ -1,13 +1,23 @@
 'use client';
 
-import DayView from '@/components/scheduler/DayView';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
 	useGetMembersWithCreator,
 	useGetStudio,
 } from '@/lib/queries/hooks/query';
 import { DotFilledIcon } from '@radix-ui/react-icons';
+import { format, getDay, parse, startOfWeek } from 'date-fns';
+import enUS from 'date-fns/locale/en-US';
 import { FC } from 'react';
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+const localizer = dateFnsLocalizer({
+	format,
+	parse,
+	startOfWeek,
+	getDay,
+	locales: { 'en-US': enUS },
+});
 
 interface StudioPageProps {
 	params: {
@@ -50,8 +60,14 @@ const StudioPage: FC<StudioPageProps> = ({ params }) => {
 				</div>
 			</header>
 			<section className='flex flex-col gap-2'>
-				<h2 className='text-2xl'>This week&apos;s schedule</h2>
-				<DayView studioId={id} />
+				<h2 className='text-2xl'>Signouts</h2>
+				<Calendar
+					localizer={localizer}
+					defaultView='week'
+					startAccessor='start'
+					endAccessor='end'
+					style={{ height: 500 }}
+				/>
 			</section>
 		</main>
 	);

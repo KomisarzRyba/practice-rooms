@@ -31,6 +31,7 @@
     "next": "latest",
     "next-auth": "latest",
     "react": "latest",
+    "react-big-calendar": "^1.8.4",
     "react-dom": "latest",
     "react-hook-form": "latest",
     "tailwind-merge": "^1.14.0",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
+    "@types/react-big-calendar": "^1.6.5",
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
     "eslint": "latest",
